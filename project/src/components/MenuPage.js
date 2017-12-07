@@ -13,48 +13,29 @@ export default class MenuPage extends React.Component {
         };
     }
 
+    componentWillMount() {
+        this.menu = firebase.database().ref('menu/')
+        this.menu.on('value', snapshot => this.setState({ menuItems: snapshot.val() }));
+    }
+
     render() {
         return (
             <div className="menu-view bg-light py-2">
                 <h1 className="my-2 text-center selection-1 barlow">T h e  &nbsp; <span className="udon-red">S e l e c t i o n</span></h1>
                 <h3 className="text-center selection-2 barlow">Noodles for every occasion</h3>
                 <div className="barlow container d-flex flex-wrap justify-content-center text-center">
-                    <MenuItem udonClass="udon-title-1" soupName="Soup Udon" japaneseName="かけうどん"
-                        descr="Udon noodles served hot in our original dashi broth with sliced green onions and grated fresh ginger. Vegetarian broth also available."
-                        src="freshudon1.png" alt="udon1" />
-                    <MenuItem udonClass="udon-title-2" soupName="Sauce Udon" japaneseName="ぶっかけうどん"
-                        descr="Udon noodles served hot or chilled and lightly dressed with our dashi-shoyu sauce, sliced green onions, fresh grated ginger and Ten-kasu."
-                        src="freshudon2.png" alt="udon2" />
-                    <MenuItem udonClass="udon-title-3" soupName="Zaru Udon" japaneseName="ざるうどん"
-                        descr="Udon noodles served chilled with a frangrant soy dipping sauce, sliced green onion, grated fresh ginger, Ten-kasu and wasabi (upon request) to add to your dipping sauce."
-                        src="freshudon3.png" alt="udon3" />
-                    <MenuItem udonClass="udon-title-4" soupName="On-tama Udon" japaneseName="温玉ぶっかけうどん"
-                        descr="Udon noodles served hot or chilled and lightly dressed with our dashi-shoyu sauce, an On-tama (hot spring egg), sliced green onion and grated fresh ginger."
-                        src="freshudon4.png" alt="udon4" />
-                    <MenuItem udonClass="udon-title-5" soupName="Oroshi Udon" japaneseName="おろしぶっかけうどん"
-                        descr="Udon noodles served hot or chilled with generous helpings of grated daikon radish, our dashi-shoyu sauce, sliced green   onions, grated fresh ginger and a lemon wedge for squeezing."
-                        src="freshudon5.png" alt="udon5" />
-                    <MenuItem udonClass="udon-title-6" soupName="Niku Udon" japaneseName="肉うどん"
-                        descr="Udon noodles served as soup or sauce noodles with sukiyaki braised beef, onions, sliced green onions and grated fresh ginger."
-                        src="freshudon6.png" alt="udon6" />
-                    <MenuItem udonClass="udon-title-7" soupName="Kitsune Udon" japaneseName="きつねうどん"
-                        descr="Udon noodles served hot with our extra thick fried and marinated tofu (Atsu-age), sliced green onions &amp; grated fresh ginger."
-                        src="freshudon7.png" alt="udon7" />
-                    <MenuItem udonClass="udon-title-8" soupName="Curry Udon" japaneseName="カレーうどん"
-                        descr="Udon noodles served in our spicy Japanese curry dashi soup with beef, onions, and sliced green onions."
-                        src="freshudon8.png" alt="udon8" />
-                    <MenuItem udonClass="udon-title-9" soupName="Tan Tan Udon" japaneseName="担々うどん"
-                        descr="Udon noodles served hot or chilled, topped with our spicy Tan Tan pork and sliced green onions."
-                        src="freshudon9.png" alt="udon9" />
-                    <MenuItem udonClass="udon-title-10" soupName="Ume Niku Oroshi" japaneseName="梅肉おろしうどん"
-                        descr="Udon noodles served with sukiyaki braised beef, topped with sliced green onions, grated fresh ginger and minced pickled umeboshi plum."
-                        src="freshudon10.png" alt="udon10" />
-                    <MenuItem udonClass="udon-title-11" soupName="Goma Zaru Udon" japaneseName="ごま笊うどん"
-                        descr="Chilled fresh udon noodles served on a zaru mat with our signature sesame dipping sauce and sliced green onions on the side. Have it with or without chili oil."
-                        src="freshudon11.png" alt="udon11" />
-                    <MenuItem udonClass="udon-title-12" soupName="Tan Tan Goma Zaru" japaneseName="担々ごま笊うどん"
-                        descr="Chilled fresh udon noodles served on a zaru mat with our signature sesame dipping sauce, sliced green onions, and a spicy Tan Tan pork on the side. For the spicy food lovers!"
-                        src="freshudon12.png" alt="udon12" />
+                    {
+                        this.state.menuItems ? Object.keys(this.state.menuItems).map((key, index) => 
+                        <MenuItem
+                            key={index}
+                            itemName={this.state.menuItems[key].itemName}
+                            japaneseName={this.state.menuItems[key].japaneseName}
+                            description={this.state.menuItems[key].description}
+                            itemPrice={this.state.menuItems[key].itemPrice}
+                            imageSource={this.state.menuItems[key].imageSource}
+                            imageName={this.state.menuItems[key].imageName}
+                        />) : undefined
+                    }
                 </div>
                 <br />
                 <br />
@@ -88,11 +69,11 @@ class MenuItem extends React.Component {
     render() {
         return (
             <div className="menu-item px-2 my-2 mx-2 col-lg-3">
-                <img className="menu-pic" src={this.props.src} alt={this.props.alt} />
+                <img className="menu-pic" src={this.props.imageSource} alt={this.props.imageName} />
                 <div className="menu-japanese">
-                    <p className="my-1 font-weight-bold">{this.props.soupName}</p>
+                    <p className="my-1 font-weight-bold">{this.props.itemName}</p>
                     <p className="my-0">{this.props.japaneseName}</p>
-                    <p className="menu-desc my-0">{this.props.descr}</p>
+                    <p className="menu-desc my-0">{this.props.description}</p>
                 </div>
             </div>
         );
@@ -103,16 +84,18 @@ class AddMenuItem extends React.Component {
     constructor() {
         super();
         this.state = {
+            isUdon: true,
+            category: '',
             itemName: '',
             japaneseName: '',
             description: '',
-            imageSource: ''
+            itemPrice: 0
         };
         this.handleInputItemName = this.handleInputItemName.bind(this);
         this.handleInputJapaneseName = this.handleInputJapaneseName.bind(this);
         this.handleInputDescription = this.handleInputDescription.bind(this);
+        this.handleInputItemPrice = this.handleInputItemPrice.bind(this);
         this.handleAddMenuItem = this.handleAddMenuItem.bind(this);
-
     }
 
     handleInputItemName(event) {
@@ -127,9 +110,16 @@ class AddMenuItem extends React.Component {
         this.setState({ description: event.target.value });
     }
 
-    handleUploadImage(event) {
+    handleInputItemPrice(event) {
+        this.setState({ itemPrice: event.target.value });
+    }
+
+    handleInputCategory(event) {
+        this.setState({ category: event.target.value })
+    }
+
+    handleShowImage(event) {
         let file = event.target.files[0];
-        console.log(file);
         if (file) {
             let reader = new FileReader();
             reader.readAsDataURL(file)
@@ -137,18 +127,32 @@ class AddMenuItem extends React.Component {
         }
     }
 
-    handleAddMenuItem() {
-        let key = firebase.database().ref().child('menu/').push().key;
+    handleAddMenuItem(event) {
+        event.preventDefault();
+        let file = this.imageInput.files[0];
+        if (file) {
+            let key = firebase.database().ref().child('menu/').push().key;
+            let storageRef = firebase.storage().ref('menu/' + key).child(file.name);
+            storageRef.put(file).then(snapshot => this.handleUpdateMenuItem(event, key, file.name, snapshot.downloadURL));
+        }
+    }
+
+    handleUpdateMenuItem(event, key, fileName, imageUrl) {
+        event.preventDefault();
         let menuData = {
             itemName: this.state.itemName,
             japaneseName: this.state.japaneseName,
             description: this.state.description,
-            imageSource: this.state.imageSource
+            itemPrice: '',
+            imageSource: imageUrl,
+            imageName: fileName
         };
         let updates = {};
         updates['menu/' + key] = menuData;
         firebase.database().ref().update(updates);
-        this.setState({ itemName: '', japaneseName: '', description: '', imageSource: '' });
+        this.imageInput.value = '';
+        this.foodImage.src = '';
+        this.setState({ itemName: '', japaneseName: '', description: '', imageSource: '', itemPrice: 0});
     }
 
     render() {
@@ -157,7 +161,7 @@ class AddMenuItem extends React.Component {
                 <button className="btn btn-dark" data-toggle="modal" data-target="#addMenuItem">Add Menu Item</button>
                 <div className="modal fade" id="addMenuItem" tabIndex="-1" role="dialog" aria-labelledby="addMenuItemLabel" aria-hidden="true">
                     <div className="modal-dialog" role="document">
-                        <div className="modal-content">
+                        <form className="modal-content" onSubmit={event => this.handleAddMenuItem(event)}>
                             <div id="modalHeader" className="modal-header">
                                 <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
@@ -168,17 +172,22 @@ class AddMenuItem extends React.Component {
                                 <img className="food-item" alt="Food Item" ref={foodImage => this.foodImage = foodImage} />
                                 <button className="btn btn-dark d-block mt-3 mb-3 mx-auto" onClick={() => this.imageInput.click()}>Add Image</button>
                                 <label className="custom-control custom-radio">
-                                    <input id="radio1" name="radio" type="radio" className="custom-control-input" />
+                                    <input id="radio1" name="radio" type="radio" className="custom-control-input" value="udon" required
+                                        ref={udonRadio => this.udonRadio = udonRadio}
+                                    />
                                     <span className="custom-control-indicator"></span>
                                     <span className="custom-control-description">Udon</span>
                                 </label>
                                 <label className="custom-control custom-radio">
-                                    <input id="radio2" name="radio" type="radio" className="custom-control-input" />
+                                    <input id="radio2" name="radio" type="radio" className="custom-control-input" value="side"/>
                                     <span className="custom-control-indicator"></span>
-                                    <span className="custom-control-description">Side/Dessert/Drink</span>
+                                    <span className="custom-control-description">Side</span>
                                 </label>
-                                <div className="form-group">
-                                </div>
+                                <label className="custom-control custom-radio">
+                                    <input id="radio3" name="radio" type="radio" className="custom-control-input" value="dessertOrDrink"/>
+                                    <span className="custom-control-indicator"></span>
+                                    <span className="custom-control-description">Dessert/Drink</span>
+                                </label>
                                 <div className="form-group">
                                     <input type="text" className="form-control" placeholder="Item Name" required
                                         value={this.state.itemName}
@@ -197,16 +206,22 @@ class AddMenuItem extends React.Component {
                                         onInput={event => this.handleInputDescription(event)}>
                                     </textarea>
                                 </div>
+                                <div className="form-group">
+                                    <input type="number" className="form-control" placeholder="Item price" required
+                                        value={this.state.itemPrice}
+                                        onInput={event => this.handleInputItemPrice(event)}
+                                    />
+                                </div>
                             </div>
                             <div className="modal-footer">
-                                <button type="button" className="btn btn-success" onClick={() => this.handleAddMenuItem()}>Save</button>
+                                <button type="submit" className="btn btn-success">Save</button>
                                 <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
                             </div>
                             <input className="hide" type="file" accept="image/*" required
                                 ref={imageInput => this.imageInput = imageInput}
-                                onChange={(event) => this.handleUploadImage(event)}
+                                onChange={(event) => this.handleShowImage(event)}
                             />
-                        </div>
+                        </form>
 
                     </div>
                 </div>

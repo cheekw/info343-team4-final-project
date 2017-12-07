@@ -3,7 +3,7 @@ import React from 'react';
 export default class Footer extends React.Component {
     render() {
         return(
-            <div className="align-bottom bg-light text-black py-2 text-center">
+            <div className="footer bg-light text-black py-2 text-center">
             	<hr/>
             	<footer>
 	        		<div className="container">
