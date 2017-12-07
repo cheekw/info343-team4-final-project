@@ -1,3 +1,8 @@
+/* General */
+.barlow {
+	font-family: "Barlow";
+}
+
 html, body, #root, .page-view {
     height: 100%;
 }
@@ -11,6 +16,264 @@ input[type="button"], input[type="submit"], input[type="reset"], input[type="fil
     -webkit-appearance: none;
 }
 
-button {
+/* Navbar Page */
+nav img {
+	height: 40px;
+}
+
+.nav-link {
+    color: lightgrey;
     cursor: pointer;
+}
+
+.nav-link:hover {
+    color:black;
+}
+
+#dropdown {
+	list-style: none;
+}
+
+.nav-item {
+	font-size: 20px;
+	font-family: "Barlow Condensed";
+    letter-spacing: .5px;
+    cursor: pointer
+}
+
+.dropdown-item {
+    cursor: pointer;
+}
+
+.login-info {
+	border-bottom: 1px #e1e4e8 solid;
+	padding-bottom: 8px;
+}
+
+@media (max-width: 768px) {
+	.navbar {
+		display: none;
+	}
+}
+
+/* Home Page */
+.steps {
+	font-size: 20px;
+	text-align: center;
+}
+
+#steps {
+	font-family: "Barlow";
+}
+
+div.udon-red.menu-header {
+	float: center;
+}
+
+.udon-red {
+    color: #ed1c24;
+}
+
+#logo-bowl {
+	max-height: 180px;
+	margin-top: 20px;
+}
+
+.hours-list {
+	overflow: auto;
+	max-height: 200px;
+	max-width: 1000px;
+	border: 1px #ccc solid;
+	padding: 10px;
+}
+
+.view-menu {
+	margin: 0 auto;
+	width: 100px; 
+	color: black;
+	text-decoration-color: black;
+}
+
+/* Menu Page */
+div.menu-header {
+    font-size: 24px;
+    font-weight: 700;
+}
+
+div.udon-red {
+	font-size: 24px;
+	font-weight: 700;
+}
+
+.specials {
+	font-size: 24px;
+	font-weight: 700;
+}
+
+.selection-1 {
+	font-family: "Barlow Semi Condensed", sans-serif;
+	font-weight: bold;
+	font-size: 50px;
+}
+
+.selection-2 {
+	font-family: "Barlow Semi Condensed", sans-serif;
+	font-weight: bold;
+}
+
+.menu-desc {
+    width: 200px;
+    margin: auto;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 110%;
+	white-space: normal;
+}
+
+.udon-title {
+	font-size: 20px;
+	font-weight: 700;
+	width: 200px;
+    height: 250px;
+	overflow: auto;
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: column;
+}
+
+.menu-japanese {
+	font-size: 20px;
+	font-weight: 700;
+}
+
+.container-1 {
+	border: 1px #ccc solid;
+	padding: 10px;
+}
+
+.btn {
+    margin: 1rem;
+}
+
+.center .form-group {
+    text-align: center;
+}
+
+.center .form-control {
+    margin: auto;
+}
+
+.modal-body {
+    text-align: center;
+    width: 100%;
+    margin: auto;
+}
+
+.center {
+    text-align: center; 
+    margin-top: 2rem;
+}
+
+.food-item {
+    max-width: 150px;
+}
+
+.hide {
+    display: none;
+}
+
+/* Mission Page */
+
+/* Contact Page */
+.inquiry-input.form-control {
+    margin: none;
+}
+
+/* SignIn/SignUp Page */
+h1 {
+    margin: 1rem;
+    font-weight: bolder;
+}
+
+.form-control {
+    width: 100%;
+    border-radius: 3px;
+    font: inherit;
+    font-size: 1.1rem;
+    padding: 12px 20px;
+    border: 1px solid rgb(157, 157, 157);
+    box-sizing: border-box;
+}
+
+.initial-page .form-control {
+    max-width: 320px;    
+    margin: auto;
+}
+
+.btn {
+    max-width: 320px;
+    width: 100%;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border-radius: 3px;
+    border: none;
+    cursor: pointer;
+}
+
+/* Settings Page */
+.delete-btn, .user-delete {
+    color: #cb2431;
+}
+
+.settings-btn {
+    background-color: lightgrey;
+}
+
+.user-settings {
+    border-bottom: 1px #e1e4e8 solid;
+    padding-bottom: 8px;
+}
+
+/* Footer Page */
+svg {
+	fill: black;
+}
+
+
+
+
+#business-hours {
+	background-color: rgba(255, 0, 0, 0.1);
+	padding: 8px;
+}
+
+#icons {
+	padding-left: 22px;
+}
+
+footer { 
+	font-family: "Open Sans", Helvetica, Arial, sans-serif;
+}
+
+#locations {
+	font-size: 14px;
+}
+
+.menu-pic {
+	margin: 0 auto;
+}
+
+#menu-page {
+	height: 500px;
+	background-image: "../public/udonpic.png";
+}
+
+nav a {
+	color: lightgrey;
+	font-size: 18px;
+	font-family: lato;	
+}
+
+#red {
+	color: red;
 }

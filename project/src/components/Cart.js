@@ -1,7 +1,6 @@
 import React from 'react';
 
-export default class UserSettings extends React.Component {
-    // delete account/change email?/change password/photoURL?
+export default class OrderOnline extends React.Component {
     render() {
         return (
             <div>

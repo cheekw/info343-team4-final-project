@@ -4,7 +4,6 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
 import constants from './constants';
-import '../css/SignInUp.css';
 
 export default class SignIn extends React.Component {
     constructor(props) {
@@ -16,13 +15,12 @@ export default class SignIn extends React.Component {
         this.handleSignIn = this.handleSignIn.bind(this);
     }
 
-    // figure out how to redirect
     componentDidMount() {
         this.authUnsub = firebase.auth().onAuthStateChanged(user => {
-			if (user) {
+            if (user) {
                 this.props.history.push(constants.routes.home)
             }
-		});
+        });
     }
 
     componentWillUnmount() {
@@ -32,15 +30,6 @@ export default class SignIn extends React.Component {
     handleSignIn(event) {
         event.preventDefault();
         firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password)
-            .then(user => {
-                this.userRef = firebase.database().ref('users/' + user.uid);
-                this.userRef.on('value', snapshot => {
-                    let userData = snapshot.val();
-                    if (userData !== null) {
-                        this.props.handlePrivilege(userData.privilege);
-                    }
-                });
-            })
             .then(() => this.props.history.push(constants.routes.home))
             .catch(error => this.setState({ errorMessage: error.message }));
     }

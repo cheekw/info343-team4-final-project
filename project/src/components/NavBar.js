@@ -1,12 +1,42 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
 import constants from './constants';
-import '../css/NavBar.css';
 
 export default class NavBar extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            accountPrivilege: '',
+            user: undefined
+        };
+    }
+
+    componentDidMount() {
+        this.authUnsub = firebase.auth().onAuthStateChanged(user => {
+            if (user) {
+                this.userRef = firebase.database().ref('users').child(user.uid);
+                this.userRef.on('value', snapshot => {
+                    let privilege = snapshot.val();
+                    if(privilege !== null) {
+                        this.setState({accountPrivilege: privilege.privilege});
+                    }
+                });
+                this.setState({ user: user });
+            } else {
+                this.setState({ user: undefined });
+            }
+        });
+    }
+
+    componentWillUnmount() {
+        if(this.userRef) {
+            this.userRef.off();
+        }
+        this.authUnsub();
+    }
+
     render() {
         return (
             <div>
@@ -19,11 +49,14 @@ export default class NavBar extends React.Component {
                             <a className="nav-link barlow" href={constants.routes.menu}>Menu</a>
                         </li>
                         <li className="nav-item mx-2">
+                            <a className="nav-link barlow" href={constants.routes.mission}>Our Mission</a>
+                        </li>
+                        <li className="nav-item mx-2">
                             <a className="nav-link barlow" href={constants.routes.contact}>Contact Us</a>
                         </li>
                         {
-                            this.props.user ?
-                                <Dropdown /> :
+                            this.state.user ?
+                                <Dropdown user={this.state.user} /> :
                                 <SignRedirect />
                         }
                     </ul>
@@ -52,8 +85,9 @@ class Dropdown extends React.Component {
                     User Settings
                 </button>
                 <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a className="dropdown-item barlow" href={constants.routes.home}>Profile</a>
-                    <a className="dropdown-item barlow" href={constants.routes.settings}>Order</a>
+                    <p className="dropdown-item login-info barlow">Signed in as <strong>{this.props.user.displayName}</strong></p>
+                    <a className="dropdown-item barlow" href={constants.routes.cart}>Order</a>
+                    <a className="dropdown-item barlow" href={constants.routes.settings}>Settings</a>
                     <a type="submit" className="dropdown-item barlow" onClick={this.handleSignOut}>Sign Out</a>
                 </div>
             </div>

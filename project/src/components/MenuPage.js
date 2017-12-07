@@ -3,7 +3,6 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
 import "firebase/storage";
-import '../css/MenuPage.css';
 
 export default class MenuPage extends React.Component {
     constructor() {
@@ -221,8 +220,12 @@ class AddMenuItem extends React.Component {
                                 ref={imageInput => this.imageInput = imageInput}
                                 onChange={(event) => this.handleShowImage(event)}
                             />
+<<<<<<< HEAD
                         </form>
 
+=======
+                        </div>
+>>>>>>> 444ba96acfaff00d6ce8ea704b6cc537b9bd17c0
                     </div>
                 </div>
             </div>

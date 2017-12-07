@@ -1,6 +1,5 @@
 import React from 'react';
 import firebase from 'firebase/app';
-import '../css/ContactPage.css';
 
 export default class ContactPage extends React.Component {
     constructor() {
