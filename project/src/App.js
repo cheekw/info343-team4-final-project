@@ -11,6 +11,7 @@ import SignUp from './components/SignUpPage';
 import SignIn from './components/SignInPage';
 import UserSettings from './components/UserSettingPage';
 import constants from './components/constants';
+import Locations from './components/Locations';
 import './App.css';
 
 class App extends Component {
@@ -29,6 +30,7 @@ class App extends Component {
 							}
 						/>
 						<Route exact path={constants.routes.mission} component={Mission} />
+						<Route exact path={constants.routes.locations} component={Locations}/>
 						<Route exact path={constants.routes.signup}
 							render={
 								props => <SignUp {...props} />
