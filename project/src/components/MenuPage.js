@@ -220,12 +220,8 @@ class AddMenuItem extends React.Component {
                                 ref={imageInput => this.imageInput = imageInput}
                                 onChange={(event) => this.handleShowImage(event)}
                             />
-<<<<<<< HEAD
                         </form>
 
-=======
-                        </div>
->>>>>>> 444ba96acfaff00d6ce8ea704b6cc537b9bd17c0
                     </div>
                 </div>
             </div>
