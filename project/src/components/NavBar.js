@@ -19,8 +19,8 @@ export default class NavBar extends React.Component {
                 this.userRef = firebase.database().ref('users').child(user.uid);
                 this.userRef.on('value', snapshot => {
                     let privilege = snapshot.val();
-                    if(privilege !== null) {
-                        this.setState({accountPrivilege: privilege.privilege});
+                    if (privilege !== null) {
+                        this.setState({ accountPrivilege: privilege.privilege });
                     }
                 });
                 this.setState({ user: user });
@@ -31,7 +31,7 @@ export default class NavBar extends React.Component {
     }
 
     componentWillUnmount() {
-        if(this.userRef) {
+        if (this.userRef) {
             this.userRef.off();
         }
         this.authUnsub();
@@ -54,9 +54,12 @@ export default class NavBar extends React.Component {
                         <li className="nav-item mx-2">
                             <a className="nav-link barlow" href={constants.routes.locations}>Locations</a>
                         </li>
-                        <li className="nav-item mx-2">
-                            <a className="nav-link barlow" href={constants.routes.contact}>Contact Us</a>
-                        </li>
+                        {
+                            this.state.user ? <li className="nav-item mx-2">
+                                <a className="nav-link barlow" href={constants.routes.contact}>Contact Us</a>
+                            </li> : undefined
+                        }
+
                         {
                             this.state.user ?
                                 <Dropdown user={this.state.user} /> :

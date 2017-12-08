@@ -2,41 +2,36 @@ import React from 'react';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
+import constants from './constants';
 
 export default class UserSettings extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            accountPrivilege: '',
-            oldPassword: '',
-            newPassword: '',
-            confirmPassword: '',
-            password: ''
-        };
-        this.handleDelete = this.handleDelete.bind(this);
-        this.handlePasswordChange = this.handlePasswordChange.bind(this);
-    }
-
     componentDidMount() {
         this.authUnsub = firebase.auth().onAuthStateChanged(user => {
-            if (user) {
-                console.log(user)
-                this.userRef = firebase.database().ref('users').child(user.uid);
-                this.userRef.on('value', snapshot => {
-                    let privilege = snapshot.val();
-                    if (privilege !== null) {
-                        this.setState({ accountPrivilege: privilege.privilege });
-                    }
-                });
+            if (!user) {
+                this.props.history.push(constants.routes.home);
             }
         });
     }
 
     componentWillUnmount() {
-        if (this.userRef) {
-            this.userRef.off();
-        }
         this.authUnsub();
+    }
+
+    render() {
+        return (
+            <div className="container initial-page text-center">
+                <ChangePassword />
+                <DeleteAccount />
+            </div>
+        );
+    }
+}
+
+class DeleteAccount extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {};
+        this.handleDelete = this.handleDelete.bind(this);
     }
 
     handleDelete() {
@@ -46,21 +41,80 @@ export default class UserSettings extends React.Component {
         firebase.database().ref('users').child(user.uid).remove();
     }
 
+    render() {
+        return (
+            <div>
+                <h2 className="user-settings user-delete">Delete Account</h2>
+                {
+                    this.state.deleteErrorMessage ?
+                        <div className="alert alert-danger">{this.state.deleteErrorMessage}</div> :
+                        undefined
+                }
+                <p>Once you delete your account, there is no going back. Please be certain.</p>
+                <button className="btn settings-btn delete-btn" data-toggle="modal" data-target="#deleteAccount" type="submit">Delete Account</button>
+                <div className="center">
+                    <div className="modal fade" id="deleteAccount" tabIndex="-1" role="dialog" aria-labelledby="DeleteAccountLabel" aria-hidden="true">
+                        <div className="modal-dialog" role="document">
+                            <div className="modal-content">
+                                <div className="modal-header">
+                                    <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div id="modalBody" className="modal-body">
+                                    <h3>Are you sure you want to do this? All your data will be permanently deleted.</h3>
+                                </div>
+                                <div className="modal-footer">
+                                    <button type="button" className="btn btn-success" data-dismiss="modal" onClick={this.handleDelete}>Delete</button>
+                                    <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+}
+
+class ChangePassword extends React.Component {
+    constructor(props) {
+        super(props)
+        this.state = {
+            oldPassword: '',
+            newPassword: '',
+            confirmPassword: '',
+            password: ''
+        };
+        this.handlePasswordChange = this.handlePasswordChange.bind(this);
+    }
+
     handlePasswordChange() {
-        let user = firebase.auth().currentUser;
-        if (this.statenewPassword === this.state.confirmPassword) {
-            user.reauthenticateWithCredential(firebase.auth.EmailAuthProvider.credential(user.email, this.state.oldPassword))
-                .updatePassword(this.state.newPassword)
-                .catch(error => this.setState({ passwordErrorMessage: error.message }));
+        // display the error message somehow
+        // fix reloading problem
+        if (this.state.newPassword === this.state.confirmPassword) {
+            if (this.state.newPassword.length < 6) {
+                let user = firebase.auth().currentUser;
+                let credential = firebase.auth.EmailAuthProvider.credential(user.email, this.state.oldPassword);
+                user.reauthenticateWithCredential(credential)
+                    .then(user.updatePassword(this.state.newPassword))
+                    .catch(error => this.setState({ passwordErrorMessage: error.message }));
+                firebase.auth().signOut()
+                    .catch(error => this.setState({ errorMessage: error.message }));
+            } else {
+                this.setState({ passwordErrorMessage: 'New password needs to be six characters long' });
+            }
+        } else {
+            this.setState({ passwordErrorMessage: 'New passwords do not match' });
         }
     }
 
     render() {
         return (
-            <div className="container initial-page text-center">
+            <div>
                 <h2 className="user-settings">Change Password{this.state.password}</h2>
                 {
-                    this.state.errorMessage ?
+                    this.state.passwordErrorMessage ?
                         <div className="alert alert-danger">{this.state.passwordErrorMessage}</div> :
                         undefined
                 }
@@ -92,41 +146,6 @@ export default class UserSettings extends React.Component {
                     <div className="form-group">
                         <button className="btn settings-btn" type="submit">Update Password</button>
                     </div>
-                </form>
-                <h2 className="user-settings user-delete">Delete Account</h2>
-                {
-                    this.state.errorMessage ?
-                        <div className="alert alert-danger">{this.state.deleteErrorMessage}</div> :
-                        undefined
-                }
-                <p>Once you delete your account, there is no going back. Please be certain.</p>
-                <form onSubmit={this.handleDelete}>
-                    <button className="btn settings-btn delete-btn" type="submit">Delete Account</button>
-                    {/* <div className="center">
-                        <div className="modal fade" id="deleteAccount" tabIndex="-1" role="dialog" aria-labelledby="DeleteAccountLabel" aria-hidden="true">
-                            <div className="modal-dialog" role="document">
-                                <div className="modal-content">
-                                    <div id="modalHeader" className="modal-header">
-                                        <button type="button" className="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div id="modalBody" className="modal-body">
-                                        <h3>Are you sure you want to do this?</h3>
-                                        <h3>All your data will be permanently deleted.</h3>
-                                    </div>
-                                    <div className="modal-footer">
-                                        <button type="button" className="btn btn-success" onClick={() => this.handleDelete}>Delete</button>
-                                        <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    </div>
-                                    <input className="hide" type="file" accept="image/*" required
-                                        ref={imageInput => this.imageInput = imageInput}
-                                        onChange={(event) => this.handleUploadImage(event)}
-                                    />
-                                </div>
-                            </div>
-                        </div>
-                    </div> */}
                 </form>
             </div>
         );

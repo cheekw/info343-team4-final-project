@@ -32,7 +32,7 @@ class App extends Component {
 						/>
 						<Route exact path={constants.routes.mission} component={Mission} />
 						<Route exact path={constants.routes.locations} component={Locations}/>
-						<Route exact path={constants.routes.mission} component={OnlineOrdering} />
+						<Route exact path={constants.routes.onlineordering} component={OnlineOrdering} />
 						<Route exact path={constants.routes.signup}
 							render={
 								props => <SignUp {...props} />
