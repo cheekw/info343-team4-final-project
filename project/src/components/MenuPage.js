@@ -40,6 +40,7 @@ export default class MenuPage extends React.Component {
         return (
             <div className="menu-view bg-light py-2">
                 <h1 className="my-2 text-center selection-1 barlow">T h e  &nbsp; <span className="udon-red">S e l e c t i o n</span></h1>
+                {this.state.accountPrivilege === 'admin' ? <AddMenuItem /> : undefined}
                 {
                     this.state.menuItems ?
                         <div>
@@ -115,7 +116,6 @@ export default class MenuPage extends React.Component {
                 <div className="center mx-auto">
                     <img src="https://firebasestorage.googleapis.com/v0/b/info343-final-project-b0d70.appspot.com/o/equals.png?alt=media&token=936dd3ed-c2bd-479d-8769-5cdf8f07d737" alt="equals" />
                 </div>
-                {this.state.accountPrivilege === 'admin' ? <AddMenuItem /> : undefined}
             </div >
         );
     }
