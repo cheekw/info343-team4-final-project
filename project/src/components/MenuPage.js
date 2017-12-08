@@ -2,69 +2,131 @@ import React from 'react';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
-import "firebase/storage";
+import 'firebase/storage';
 
 export default class MenuPage extends React.Component {
     constructor() {
         super();
         this.state = {
-            menuItems: {}
+            menuItems: {},
+            accountPrivilege: ''
         };
     }
 
     componentWillMount() {
         this.menu = firebase.database().ref('menu/')
         this.menu.on('value', snapshot => this.setState({ menuItems: snapshot.val() }));
+        this.authUnsub = firebase.auth().onAuthStateChanged(user => {
+            if (user) {
+                this.userRef = firebase.database().ref('users').child(user.uid);
+                this.userRef.on('value', snapshot => {
+                    let privilege = snapshot.val();
+                    if (privilege !== null) {
+                        this.setState({ accountPrivilege: privilege.privilege });
+                    }
+                });
+            }
+        });
+    }
+
+    componentWillUnmount() {
+        if (this.userRef) {
+            this.userRef.off();
+        }
+        this.authUnsub();
     }
 
     render() {
         return (
             <div className="menu-view bg-light py-2">
                 <h1 className="my-2 text-center selection-1 barlow">T h e  &nbsp; <span className="udon-red">S e l e c t i o n</span></h1>
-                <h3 className="text-center selection-2 barlow">Noodles for every occasion</h3>
-                <div className="barlow container d-flex flex-wrap justify-content-center text-center">
-                    {
-                        this.state.menuItems ? Object.keys(this.state.menuItems).map((key, index) => 
-                        <MenuItem
-                            key={index}
-                            itemName={this.state.menuItems[key].itemName}
-                            japaneseName={this.state.menuItems[key].japaneseName}
-                            description={this.state.menuItems[key].description}
-                            itemPrice={this.state.menuItems[key].itemPrice}
-                            imageSource={this.state.menuItems[key].imageSource}
-                            imageName={this.state.menuItems[key].imageName}
-                        />) : undefined
-                    }
+                {this.state.accountPrivilege === 'admin' ? <AddMenuItem /> : undefined}
+                {
+                    this.state.menuItems ?
+                        <div>
+                            {
+                                this.state.menuItems.udon ? <div>
+                                    <h3 className="text-center selection-2 barlow font-weight-light"><span className="font-weight-bold udon-red">NOODLES</span> for every occasion</h3>
+                                    <div className="barlow container d-flex flex-wrap justify-content-center text-center">
+                                        {
+                                            Object.keys(this.state.menuItems.udon).map((key, index) =>
+                                                <MenuItem
+                                                    key={index}
+                                                    itemKey={key}
+                                                    itemName={this.state.menuItems.udon[key].itemName}
+                                                    japaneseName={this.state.menuItems.udon[key].japaneseName}
+                                                    description={this.state.menuItems.udon[key].description}
+                                                    itemPrice={this.state.menuItems.udon[key].itemPrice}
+                                                    imageSource={this.state.menuItems.udon[key].imageSource}
+                                                    imageName={this.state.menuItems.udon[key].imageName}
+                                                />
+                                            )
+                                        } </div>
+                                </div> : undefined
+                            }
+                            <br />
+                            <br />
+                            {
+                                this.state.menuItems.side ? <div>
+                                    <h3 className="text-center selection-2 barlow font-weight-light">Add your favorite <span className="font-weight-bold udon-red">TOPPINGS & SIDES</span></h3>
+                                    <div className="barlow container d-flex flex-wrap justify-content-center text-center">
+                                        {
+                                            Object.keys(this.state.menuItems.side).map((key, index) =>
+                                                <MenuItem
+                                                    key={index}
+                                                    itemKey={key}
+                                                    itemName={this.state.menuItems.side[key].itemName}
+                                                    japaneseName={this.state.menuItems.side[key].japaneseName}
+                                                    description={this.state.menuItems.side[key].description}
+                                                    itemPrice={this.state.menuItems.side[key].itemPrice}
+                                                    imageSource={this.state.menuItems.side[key].imageSource}
+                                                    imageName={this.state.menuItems.side[key].imageName}
+                                                />
+                                            )
+                                        }
+                                    </div>
+                                </div> : undefined
+                            }
+                            <br />
+                            <br />
+                            {
+                                this.state.menuItems.dessertOrDrink ? <div>
+                                    <h3 className="text-center selection-2 barlow font-weight-light">Get some <span className="font-weight-bold udon-red">DESSERTS & DRINKS</span></h3>
+                                    <div className="barlow container d-flex flex-wrap justify-content-center text-center">
+                                        {
+                                            Object.keys(this.state.menuItems.dessertOrDrink).map((key, index) =>
+                                                <MenuItem
+                                                    key={index}
+                                                    itemKey={key}
+                                                    itemName={this.state.menuItems.dessertOrDrink[key].itemName}
+                                                    japaneseName={this.state.menuItems.dessertOrDrink[key].japaneseName}
+                                                    description={this.state.menuItems.dessertOrDrink[key].description}
+                                                    itemPrice={this.state.menuItems.dessertOrDrink[key].itemPrice}
+                                                    imageSource={this.state.menuItems.dessertOrDrink[key].imageSource}
+                                                    imageName={this.state.menuItems.dessertOrDrink[key].imageName}
+                                                />
+                                            )
+                                        }
+                                    </div>
+                                </div> : undefined
+                            }
+                        </div>
+                        : undefined
+                }
+                <div className="center mx-auto">
+                    <img src="https://firebasestorage.googleapis.com/v0/b/info343-final-project-b0d70.appspot.com/o/equals.png?alt=media&token=936dd3ed-c2bd-479d-8769-5cdf8f07d737" alt="equals" />
                 </div>
-                <br />
-                <br />
-
-                <h2 className="text-center selection-2 barlow">Add a <span className="font-weight-bold">CRUNCH</span> or something <span className="font-weight-bold">SWEET</span></h2>
-                <div className="barlow container d-flex flex-wrap justify-content-center text-center">
-                    <MenuItem soupName="Tempura" japaneseName="天ぷら"
-                        src="https://udonseattle.files.wordpress.com/2011/12/menu-tempura.png?w=170&zoom=2" alt="tempura" />
-                    <MenuItem soupName="Kaki-Age" japaneseName="かき揚げ"
-                        src="https://udonseattle.files.wordpress.com/2011/12/menu-kakiage.png?w=170&zoom=2" alt="kakiage" />
-                    <MenuItem soupName="Kaarage" japaneseName="唐揚げ"
-                        src="https://udonseattle.files.wordpress.com/2011/12/menu-karaage.png?w=170&zoom=2" alt="kaarage" />
-                    <MenuItem soupName="Onigiri" japaneseName="おむすび"
-                        src="https://udonseattle.files.wordpress.com/2011/12/menu-onigiri2.png?w=170&zoom=2" alt="onigiri" />
-                    <MenuItem soupName="Fountain Drink" japaneseName="お飲物"
-                        src="https://udonseattle.files.wordpress.com/2011/12/menu-fountain-drink.png?w=170&zoom=2" alt="drink" />
-                    <MenuItem soupName="Specialty Drink" japaneseName="お飲物"
-                        src="https://udonseattle.files.wordpress.com/2011/12/menu-specialty-drink.png?w=170&zoom=2" alt="specialty drink" />
-                    <MenuItem soupName="Cake Slice" japaneseName="デザート"
-                        src="https://udonseattle.files.wordpress.com/2011/12/menu-cake.png?w=170&zoom=2" alt="cake" />
-                    <MenuItem soupName="Flan/Purin" japaneseName="デザート"
-                        src="https://udonseattle.files.wordpress.com/2011/12/menu-flan.png?w=170&zoom=2" alt="flan/purin" />
-                </div>
-                {this.props.user ? <AddMenuItem /> : undefined}
-            </div>
+            </div >
         );
     }
 }
 
 class MenuItem extends React.Component {
+    constructor() {
+        super()
+        this.state = { editing: false };
+    }
+
     render() {
         return (
             <div className="menu-item px-2 my-2 mx-2 col-lg-3">
@@ -83,12 +145,12 @@ class AddMenuItem extends React.Component {
     constructor() {
         super();
         this.state = {
-            isUdon: true,
             category: '',
             itemName: '',
             japaneseName: '',
             description: '',
-            itemPrice: 0
+            itemPrice: 0,
+            imageExists: false
         };
         this.handleInputItemName = this.handleInputItemName.bind(this);
         this.handleInputJapaneseName = this.handleInputJapaneseName.bind(this);
@@ -119,10 +181,12 @@ class AddMenuItem extends React.Component {
 
     handleShowImage(event) {
         let file = event.target.files[0];
+        console.log(file);
         if (file) {
             let reader = new FileReader();
             reader.readAsDataURL(file)
             reader.onload = () => this.foodImage.src = reader.result;
+            this.setState({ imageExists: true });
         }
     }
 
@@ -130,28 +194,38 @@ class AddMenuItem extends React.Component {
         event.preventDefault();
         let file = this.imageInput.files[0];
         if (file) {
-            let key = firebase.database().ref().child('menu/').push().key;
+            let key = firebase.database().ref().child('menu/' + this.state.category + '/').push().key;
             let storageRef = firebase.storage().ref('menu/' + key).child(file.name);
             storageRef.put(file).then(snapshot => this.handleUpdateMenuItem(event, key, file.name, snapshot.downloadURL));
+        }
+    }
+
+    handleInputItemCategory() {
+        if (this.radio1.checked) {
+            this.setState({ category: this.radio1.value });
+        } else if (this.radio2.checked) {
+            this.setState({ category: this.radio2.value });
+        } else {
+            this.setState({ category: this.radio3.value });
         }
     }
 
     handleUpdateMenuItem(event, key, fileName, imageUrl) {
         event.preventDefault();
         let menuData = {
+            imageSource: imageUrl,
+            imageName: fileName,
             itemName: this.state.itemName,
             japaneseName: this.state.japaneseName,
             description: this.state.description,
-            itemPrice: '',
-            imageSource: imageUrl,
-            imageName: fileName
+            itemPrice: ''
         };
         let updates = {};
-        updates['menu/' + key] = menuData;
+        updates['menu/' + this.state.category + '/' + key] = menuData;
         firebase.database().ref().update(updates);
         this.imageInput.value = '';
         this.foodImage.src = '';
-        this.setState({ itemName: '', japaneseName: '', description: '', imageSource: '', itemPrice: 0});
+        this.setState({ itemName: '', japaneseName: '', description: '', imageSource: '', itemPrice: 0, imageExists: false });
     }
 
     render() {
@@ -169,21 +243,29 @@ class AddMenuItem extends React.Component {
                             <div id="modalBody" className="modal-body">
                                 <h2>Add New Menu Item</h2>
                                 <img className="food-item" alt="Food Item" ref={foodImage => this.foodImage = foodImage} />
+                                {this.state.imageExists ? undefined : <div className="alert alert-danger">An image is required</div>}
                                 <button className="btn btn-dark d-block mt-3 mb-3 mx-auto" onClick={() => this.imageInput.click()}>Add Image</button>
                                 <label className="custom-control custom-radio">
                                     <input id="radio1" name="radio" type="radio" className="custom-control-input" value="udon" required
-                                        ref={udonRadio => this.udonRadio = udonRadio}
+                                        ref={radio1 => this.radio1 = radio1}
+                                        onChange={event => this.handleInputItemCategory(event)}
                                     />
                                     <span className="custom-control-indicator"></span>
                                     <span className="custom-control-description">Udon</span>
                                 </label>
                                 <label className="custom-control custom-radio">
-                                    <input id="radio2" name="radio" type="radio" className="custom-control-input" value="side"/>
+                                    <input id="radio2" name="radio" type="radio" className="custom-control-input" value="side"
+                                        ref={radio2 => this.radio2 = radio2}
+                                        onChange={event => this.handleInputItemCategory(event)}
+                                    />
                                     <span className="custom-control-indicator"></span>
                                     <span className="custom-control-description">Side</span>
                                 </label>
                                 <label className="custom-control custom-radio">
-                                    <input id="radio3" name="radio" type="radio" className="custom-control-input" value="dessertOrDrink"/>
+                                    <input id="radio3" name="radio" type="radio" className="custom-control-input" value="dessertOrDrink"
+                                        ref={radio3 => this.radio3 = radio3}
+                                        onChange={event => this.handleInputItemCategory(event)}
+                                    />
                                     <span className="custom-control-indicator"></span>
                                     <span className="custom-control-description">Dessert/Drink</span>
                                 </label>
@@ -225,7 +307,6 @@ class AddMenuItem extends React.Component {
                     </div>
                 </div>
             </div>
-
         );
     }
 }
