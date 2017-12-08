@@ -1,10 +1,11 @@
-export default  {
+export default {
     routes: {
-        cart: '/cart',
+        analytics: '/analytics',
         contact: '/contact',
         home: '/',
         mission: '/mission',
         menu: '/menu',
+        onlineordering: '/onlineordering',
         settings: '/settings',
         signup: '/signup',
         signin: '/signin',

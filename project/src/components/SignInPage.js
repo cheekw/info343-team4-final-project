@@ -64,7 +64,7 @@ export default class SignIn extends React.Component {
                         <button className="btn btn-dark" type="submit">Sign In</button>
                     </div>
                 </form>
-                <p>''
+                <p>
                     Don't yet have an account? <Link to={constants.routes.signup}>Sign Up!</Link>
                 </p>
             </div>
