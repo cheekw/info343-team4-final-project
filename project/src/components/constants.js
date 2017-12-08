@@ -4,6 +4,7 @@ export default {
         contact: '/contact',
         home: '/',
         mission: '/mission',
+        locations: '/locations',
         menu: '/menu',
         onlineordering: '/onlineordering',
         settings: '/settings',
