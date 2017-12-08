@@ -95,6 +95,11 @@ div.udon-red.menu-header {
 }
 
 /* Menu Page */
+
+h3.selection-2 {
+    margin: 1rem;
+}
+
 div.menu-header {
     font-size: 24px;
     font-weight: 700;
@@ -113,12 +118,13 @@ div.udon-red {
 .selection-1 {
 	font-family: "Barlow Semi Condensed", sans-serif;
 	font-weight: bold;
-	font-size: 50px;
+	font-size: 30px;
 }
 
 .selection-2 {
 	font-family: "Barlow Semi Condensed", sans-serif;
-	font-weight: bold;
+    font-weight: bold;
+    font-size: 20px;
 }
 
 .menu-desc {
@@ -182,6 +188,19 @@ div.udon-red {
     display: none;
 }
 
+.alert {
+    margin-top: 1rem;
+}
+
+@media (min-width: 726px) {
+    .selection-1 {
+        font-size: 50px;
+    }
+
+    .selection-2 {
+        font-size: 30px;
+    }
+}
 /* Mission Page */
 
 /* Contact Page */
