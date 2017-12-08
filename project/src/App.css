@@ -17,6 +17,12 @@ input[type="button"], input[type="submit"], input[type="reset"], input[type="fil
 }
 
 /* Navbar Page */
+nav a {
+	color: lightgrey;
+	font-size: 18px;
+	font-family: lato;	
+}
+
 nav img {
 	height: 40px;
 }
@@ -62,10 +68,6 @@ nav img {
 	text-align: center;
 }
 
-#steps {
-	font-family: "Barlow";
-}
-
 div.udon-red.menu-header {
 	float: center;
 }
@@ -95,7 +97,6 @@ div.udon-red.menu-header {
 }
 
 /* Menu Page */
-
 h3.selection-2 {
     margin: 1rem;
 }
@@ -134,6 +135,10 @@ div.udon-red {
     font-weight: 400;
     line-height: 110%;
 	white-space: normal;
+}
+
+.menu-pic {
+	margin: 0 auto;
 }
 
 .udon-title {
@@ -203,7 +208,17 @@ div.udon-red {
 }
 /* Mission Page */
 
+/* Locations */
+.udon-address {
+	font-weight: 24px;
+}
+
 /* Contact Page */
+#business-hours {
+	background-color: rgba(255, 0, 0, 0.1);
+	padding: 8px;
+}
+
 .inquiry-input.form-control {
     margin: none;
 }
@@ -254,51 +269,14 @@ h1 {
 }
 
 /* Footer Page */
-svg {
-	fill: black;
-}
-
-
-
-
-#business-hours {
-	background-color: rgba(255, 0, 0, 0.1);
-	padding: 8px;
+footer { 
+	font-family: "Open Sans", Helvetica, Arial, sans-serif;
 }
 
 #icons {
 	padding-left: 22px;
 }
 
-footer { 
-	font-family: "Open Sans", Helvetica, Arial, sans-serif;
-}
-
-#locations {
-	font-size: 14px;
-}
-
-.menu-pic {
-	margin: 0 auto;
-}
-
-#menu-page {
-	height: 500px;
-	background-image: "../public/udonpic.png";
-}
-
-nav a {
-	color: lightgrey;
-	font-size: 18px;
-	font-family: lato;	
-}
-
-#red {
-	color: red;
-}
-
-/* Locations */
-
-.udon-address {
-	font-weight: 24px;
+svg {
+	fill: black;
 }
