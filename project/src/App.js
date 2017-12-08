@@ -31,11 +31,8 @@ class App extends Component {
 							}
 						/>
 						<Route exact path={constants.routes.mission} component={Mission} />
-<<<<<<< HEAD
 						<Route exact path={constants.routes.locations} component={Locations}/>
-=======
 						<Route exact path={constants.routes.mission} component={OnlineOrdering} />
->>>>>>> 54f0dced0d43e9fafa1051c46225757e419be47e
 						<Route exact path={constants.routes.signup}
 							render={
 								props => <SignUp {...props} />

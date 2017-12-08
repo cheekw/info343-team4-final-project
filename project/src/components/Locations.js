@@ -15,6 +15,7 @@ export default class Locations extends React.Component {
                     <div className="udon-address">1640 12th Ave, Seattle, WA 98122</div> 
                     <div className="mx-3 barlow">(206) 466-1471</div>
                     <div className="mx-3 barlow schedule">Mon-Sat: <strong>11:30am – 10pm</strong> Sunday: <strong>11:30am – 9:30pm</strong></div>
+                    <div className="mx-3 barlow schedule">Find our new location on "Cap Hill"!</div>
                     <img src="udonave.png" alt="udon-caphill"/>
                 </div>
             </div>
