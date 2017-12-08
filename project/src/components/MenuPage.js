@@ -259,7 +259,7 @@ class AddMenuItem extends React.Component {
                                         onChange={event => this.handleInputItemCategory(event)}
                                     />
                                     <span className="custom-control-indicator"></span>
-                                    <span className="custom-control-description">Side</span>
+                                    <span className="custom-control-description">Topping/Side</span>
                                 </label>
                                 <label className="custom-control custom-radio">
                                     <input id="radio3" name="radio" type="radio" className="custom-control-input" value="dessertOrDrink"
