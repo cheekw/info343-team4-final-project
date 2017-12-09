@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
-import Analytics from './components/AnalyticsPage';
 import Contact from './components/ContactPage';
 import Footer from './components/Footer';
 import Home from './components/HomePage';
@@ -23,7 +22,6 @@ class App extends Component {
 				<NavBar />
 				<Router>
 					<Switch>
-						<Route exact path={constants.routes.analytics} component={Analytics} />
 						<Route exact path={constants.routes.contact} component={Contact} />
 						<Route exact path={constants.routes.home} component={Home} />
 						<Route exact path={constants.routes.inquiries} component={Inquiries} />

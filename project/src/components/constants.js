@@ -1,6 +1,5 @@
 export default {
     routes: {
-        analytics: '/analytics',
         contact: '/contact',
         home: '/',
         locations: '/locations',
