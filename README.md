@@ -8,6 +8,7 @@ Our team is trying to rebuild a website for a local restaurant, U:Don. U:Don's c
 * Dropdown Settings Menu
 * User Settings
 * Our Missions
+* Inquiries
 ### Joseph Zhang
 * Navbar
 * Home
@@ -16,6 +17,7 @@ Our team is trying to rebuild a website for a local restaurant, U:Don. U:Don's c
 * Footer
 * Styling
 * Online Ordering
+* Favorites
 ### Marco Punio
 * Home
 * Base Menu
@@ -27,7 +29,6 @@ Our team is trying to rebuild a website for a local restaurant, U:Don. U:Don's c
 * Dynamic Menu Creation (Admin)
 * Dropdown Settings Menu
 ### TBD
-* Favorites
 * News
 * Article Component
 * Article Submission Component
