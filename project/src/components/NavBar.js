@@ -64,7 +64,7 @@ export default class NavBar extends React.Component {
                         </ul>
                         {
                             this.state.user ?
-                                <ul className="nav navbar-nav navbar-right">
+                                <ul className="nav navbar-nav navbar-right mx-4 dropdown">
                                 <li><Dropdown accountPrivilege={this.state.accountPrivilege} user={this.state.user} /></li>
                                 </ul> :
                                 <SignRedirect />
@@ -86,7 +86,6 @@ class Dropdown extends React.Component {
     handleSignOut(event) {
         event.preventDefault();
         firebase.auth().signOut();
-        this.props.router.push(constants.routes.home);
     }
 
     render() {
@@ -108,7 +107,7 @@ class Dropdown extends React.Component {
                             undefined
                     }
                     <a className="dropdown-item barlow" href={constants.routes.settings}>Settings</a>
-                    <a className="dropdown-item barlow" onClick={this.handleSignOut}>Sign Out</a>
+                    <a className="dropdown-item barlow" href={constants.routes.home} onClick={this.handleSignOut}>Sign Out</a>
                 </div>
             </div>
         );
@@ -119,10 +118,10 @@ class SignRedirect extends React.Component {
     render() {
         return (
             <div className="d-flex flex-nowrap">
-                <li className="nav-item">
+                <li className="nav-item dropdown">
                     <a className="nav-link barlow" href={constants.routes.signin}>Sign In</a>
                 </li>
-                <li className="nav-item">
+                <li className="nav-item dropdown">
                     <a className="nav-link barlow" href={constants.routes.signup}>Sign Up</a>
                 </li>
             </div>
