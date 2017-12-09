@@ -32,7 +32,7 @@ export default class MenuPage extends React.Component {
 
     componentWillUnmount() {
         if (this.userRef) {
-            this.userRef.off();
+            this.userRef.off('value');
         }
         this.authUnsub();
     }
