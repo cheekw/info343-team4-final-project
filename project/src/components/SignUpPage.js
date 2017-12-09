@@ -10,7 +10,6 @@ export default class SignUp extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            accountPrivilege: 'user',
             displayName: '',
             email: '',
             password: '',
@@ -44,7 +43,7 @@ export default class SignUp extends React.Component {
                 })
                 .then(user => {
                     firebase.database().ref('users').child(user.uid).set({
-                        'privilege': this.state.accountPrivilege,
+                        'privilege': 'user',
                         'email': user.email
                     });
                 })
@@ -58,12 +57,6 @@ export default class SignUp extends React.Component {
     render() {
         return (
             <div className="container initial-page text-center">
-                {/* button for making admin/user accounts */}
-                <button onClick={() => this.setState({ accountPrivilege: 'admin' })}>
-                    {
-                        this.state.accountPrivilege
-                    }
-                </button>
                 <h1>Sign Up</h1>
                 {
                     this.state.errorMessage ?

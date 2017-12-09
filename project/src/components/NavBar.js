@@ -32,7 +32,7 @@ export default class NavBar extends React.Component {
 
     componentWillUnmount() {
         if (this.userRef) {
-            this.userRef.off();
+            this.userRef.off('value');
         }
         this.authUnsub();
     }
@@ -87,6 +87,7 @@ class Dropdown extends React.Component {
         event.preventDefault();
         firebase.auth().signOut()
             .catch(error => this.setState({ errorMessage: error.message }));
+        this.props.history.push(constants.routes.home);
     }
 
     render() {
