@@ -1,7 +1,9 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
+import md5 from 'blueimp-md5';
 import constants from './constants';
 
 export default class SignUp extends React.Component {
@@ -19,11 +21,9 @@ export default class SignUp extends React.Component {
     componentDidMount() {
         this.authUnsub = firebase.auth().onAuthStateChanged(user => {
             if (user) {
-                this.props.history.push(constants.routes.home)
-            } else {
-                this.setState(user);
+                this.props.history.push(constants.routes.home);
             }
-        })
+        });
     }
 
     componentWillUnmount() {
@@ -33,16 +33,27 @@ export default class SignUp extends React.Component {
     handleSignUp(event) {
         event.preventDefault();
         if (this.state.password === this.state.passwordConfirmation) {
-            this.setState({ password: '', passwordConfirmation: '' });
             firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
                 .then(user => {
                     user.updateProfile({
-                        displayName: this.state.displayName
+                        displayName: this.state.displayName,
+                        photoURL: 'https://www.gravatar.com/avatar/' + md5(this.state.email.toLowerCase())
+                    });
+                    return user;
+                })
+                .then(user => {
+                    firebase.database().ref('users').child(user.uid).set({
+                        email: user.email,
+                        favorites: {
+
+                        },
+                        privilege: 'user'
                     });
                 })
-                .catch(error => this.setState({ errorMessage: error.message }))
+                .then(() => this.props.history.push(constants.routes.home))
+                .catch(error => this.setState({ errorMessage: error.message }));
         } else {
-            this.setState({ password: '', passwordConfirmation: '', errorMessage: 'Passwords do not match' });
+            this.setState({ errorMessage: 'Passwords do not match' });
         }
     }
 
@@ -81,7 +92,7 @@ export default class SignUp extends React.Component {
                         />
                     </div>
                     <div className="form-group">
-                        <input className="form-control ml-auto mr-auto" id="password" type="password"
+                        <input className="form-control ml-auto mr-auto" id="confirmPassword" type="password"
                             placeholder="Confirm your password"
                             value={this.state.passwordConfirmation}
                             onInput={event => this.setState({ passwordConfirmation: event.target.value })}
@@ -89,11 +100,11 @@ export default class SignUp extends React.Component {
                         />
                     </div>
                     <div className="form-group">
-                        <button className="btn btn-primary" type="submit">Sign Up</button>
+                        <button className="btn btn-dark" type="submit">Sign Up</button>
                     </div>
                 </form>
                 <p>
-                    {/* Have an account? <Link to="/signin">Sign In!</Link> */}
+                    Have an account? <Link to={constants.routes.signin}>Sign In!</Link>
                 </p>
             </div>
         );

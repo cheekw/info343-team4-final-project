@@ -14,7 +14,7 @@ var config = {
     authDomain: "info343-final-project-b0d70.firebaseapp.com",
     databaseURL: "https://info343-final-project-b0d70.firebaseio.com",
     projectId: "info343-final-project-b0d70",
-    storageBucket: "",
+    storageBucket: "info343-final-project-b0d70.appspot.com",
     messagingSenderId: "304358019326"
   };
   firebase.initializeApp(config);

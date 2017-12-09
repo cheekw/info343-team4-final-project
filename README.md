@@ -1,29 +1,43 @@
 # info343-team4-final-project
 ## Description
-Our team is trying to build/rebuild a website for a local restaurant, U:Don, on University Avenue. The current website provided by U:Don is not mobile friendly, so we want to help rebuild their website to provide a cleaner and more responsive interface on both mobile and desktop mediums. Their website is also designed by WordPress and has cookie-cutter qualities of a WordPress theme. By recreating their website,we want to create a unique design to attract more users to their online website.
+Our team is trying to rebuild a website for a local restaurant, U:Don. U:Don's current website is not mobile friendly, outdated and inelegant, so we want to help U:Don build a website that is clean and more responsive on both mobile and desktop mediums. Along the way, we want to help U:Don transition from using WordPress to our own custom built solution. Our solution will add a host of functionality for users such as the ability to favorite menu items, online ordering and basic account settings. Not only that, it also provides tools for admin users such as dynamic menu creation, analytics for popular items on the menu, etc.
 ## Work Distribution
 ### Alexander Zhou
-* Online Ordering
-* Ordering Form Component (phone number/)
-* Add to Cart (Modal for Quantity)
+* SignIn/SignUp
+* Account Privileges
+* Dropdown Settings Menu
+* User Settings
+* Our Missions
+* Inquiries
 ### Joseph Zhang
-* Overall Design (fonts, CSS)
+* Navbar
+* Home
+* Base Menu
 * Contact Us
+* Footer
+* Styling
+* Online Ordering
+* Favorites
 ### Marco Punio
-* Navbar (redirect to different components)
-* About/Mission
-* Locations
-* Footer (RSS, copyright)
+* Home
+* Base Menu
+* Location
+* Analytics
 ### Victor Chee
-* Menu
+* Contact Us
+* Styling
+* Dynamic Menu Creation (Admin)
+* Dropdown Settings Menu
+### TBD
 * News
 * Article Component
-* Article Submission Component (figure out how to make admin/user)
-* Firebase Deployment
+* Article Submission Component
+* Add to Cart (Modal for Quantity)
+* Ordering Form Component (Phone Number)
 ## Framework and Libraries
 * [React](https://reactjs.org/) - Javascript Library
+* [React-Router](https://reacttraining.com/react-router/web/guides/philosophy) - Dynamic Routing
+* [React-ChartJS](https://github.com/jerairrest/react-chartjs-2) - Javscript Library
 * [Firebase](https://firebase.google.com/docs/web/setup) - Database/Storage/Hosting
 * [Bootstrap](https://getbootstrap.com/docs/4.0/getting-started/introduction/) - CSS Framework
-* [Yelp API](https://www.yelp.com/developers/documentation/v3) - Menu/Pricing Reference
-* [Zomato API](https://developers.zomato.com/api) - Menu/Pricing Reference
-* [Google Fonts](https://developers.google.com/fonts/) - Design Fonts
+* [BlueImp-MD5](https://github.com/blueimp/JavaScript-MD5) - Javascript Library
