@@ -34,6 +34,7 @@ export default class MenuPage extends React.Component {
         if (this.userRef) {
             this.userRef.off('value');
         }
+        this.menu.off();
         this.authUnsub();
     }
 
@@ -138,24 +139,11 @@ class MenuItem extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            editing: false
+            editing: false,
+            editedItemName: this.props.itemName,
+            editedJapaneseName: this.props.japaneseName,
+            editedDescription: this.props.description
         };
-    }
-
-    handleCancelEdit() {
-        this.setState({ editedMessage: this.props.messageBody });
-    }
-
-    handleSaveEdit() {
-        this.updateMessage();
-    }
-
-    updateMenuItem() {
-        let updates = {};
-        updates['menu/' + this.props.category + '/' + this.props.itemKey + '/itemName'] = this.state.editedName;
-        updates['menu/' + this.props.category + '/' + this.props.itemKey + '/japaneseName'] = this.state.editedJapaneseName;
-        updates['messages/' + this.props.category + '/' + this.props.itemKey + '/description'] = this.state.editedDescription;
-        firebase.database().ref().update(updates);
     }
 
     handleEditItem() {
@@ -164,10 +152,44 @@ class MenuItem extends React.Component {
     }
 
     deleteItem(key) {
-        console.log(this.props.category);
         firebase.database().ref('menu/' + this.props.category + '/' + key).remove();
         let storageRef = firebase.storage().ref('menu/');
         storageRef.child(key + '/' + this.props.imageName).delete();
+    }
+
+    handleInputNewItemName(event) {
+        this.setState({ editedItemName: event.target.value });
+    }
+
+    handleInputNewJapaneseName(event) {
+        this.setState({ editedJapaneseName: event.target.value });
+    }
+
+    handleInputNewDescription(event) {
+        this.setState({ editedDescription: event.target.value });
+    }
+
+    stopEditing() {
+        this.menuItem.style = undefined;
+        this.setState({ editing: false });
+    }
+
+    handleCancelEdit() {
+        this.stopEditing();
+        this.setState({ editedItemName: this.props.itemName, editedJapaneseName: this.props.japaneseName, editedDescription: this.props.description });
+    }
+
+    handleSaveEdit() {
+        this.updateMenuItem();        
+        this.stopEditing();
+    }
+
+    updateMenuItem() {
+        let updates = {};
+        updates['menu/' + this.props.category + '/' + this.props.itemKey + '/itemName'] = this.state.editedItemName;
+        updates['menu/' + this.props.category + '/' + this.props.itemKey + '/japaneseName'] = this.state.editedJapaneseName;
+        updates['menu/' + this.props.category + '/' + this.props.itemKey + '/description'] = this.state.editedDescription;
+        firebase.database().ref().update(updates);
     }
 
     render() {
@@ -192,9 +214,18 @@ class MenuItem extends React.Component {
                 <img className="menu-pic" src={this.props.imageSource} alt={this.props.imageName} />
                 {
                     this.state.editing ? <form className="menu-japanese">
-                        <input className="menu-input form-control font-weight-bold" required />
-                        <input className="menu-input form-control" required />
-                        <textarea className="menu-input form-control menu-desc" rows="3" required />
+                        <input className="menu-input form-control font-weight-bold" required 
+                            value={this.state.editedItemName}
+                            onInput={event => this.handleInputNewItemName(event)}
+                        />
+                        <input className="menu-input form-control" required 
+                            value={this.state.editedJapaneseName}
+                            onInput={event => this.handleInputNewJapaneseName(event)}                            
+                        />
+                        <textarea className="menu-input form-control menu-desc" rows="5" required
+                            value={this.state.editedDescription} 
+                            onInput={event => this.handleInputNewDescription(event)}                                                        
+                        />
                         <div className="edit-buttons">
                             <button className="btn menu-button btn-success ml-3" type="button" onClick={() => this.handleSaveEdit()}>Save</button>
                             <button className="btn menu-button btn-secondary mr-3" type="button" onClick={() => this.handleCancelEdit()}>Cancel</button>
@@ -205,12 +236,6 @@ class MenuItem extends React.Component {
                             <p className="menu-desc my-0">{this.props.description}</p>
                         </div>
                 }
-                {/* {
-                    this.state.editing ? <div className="edit-buttons">
-                        <button className="btn btn-small" type="button" onClick={() => this.handleCancelEdit()}>Cancel</button>
-                        <button className="btn btn-small" type="button" onClick={() => this.handleSaveEdit()}>Save</button>
-                    </div> : undefined
-                } */}
             </div>
         );
     }
@@ -305,7 +330,7 @@ class AddMenuItem extends React.Component {
     render() {
         return (
             <div className="center">
-                <button className="btn btn-dark" data-toggle="modal" data-target="#addMenuItem">Add Menu Item</button>
+                <button className="btn btn-dark mt-4" data-toggle="modal" data-target="#addMenuItem">Add Menu Item</button>
                 <div className="modal fade" id="addMenuItem" tabIndex="-1" role="dialog" aria-labelledby="addMenuItemLabel" aria-hidden="true">
                     <div className="modal-dialog" role="document">
                         <form className="modal-content" onSubmit={event => this.handleAddMenuItem(event)}>
