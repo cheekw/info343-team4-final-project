@@ -68,7 +68,10 @@ export default class MenuPage extends React.Component {
                             <br />
                             {
                                 this.state.menuItems.side ? <div>
-                                    <h3 className="text-center selection-2 barlow font-weight-light">Add your favorite <span className="font-weight-bold udon-red">TOPPINGS & SIDES</span></h3>
+                                    <h3 className="text-center selection-2 barlow font-weight-light">
+                                        <img className="plus-icon" src="https://firebasestorage.googleapis.com/v0/b/info343-final-project-b0d70.appspot.com/o/plus.png?alt=media&token=532def02-8ba4-4b00-ab3e-b8740d10716c" alt="plus" />
+                                        your favorite <span className="font-weight-bold udon-red">TOPPINGS & SIDES</span>
+                                    </h3>
                                     <div className="barlow container d-flex flex-wrap justify-content-center text-center">
                                         {
                                             Object.keys(this.state.menuItems.side).map((key, index) =>
@@ -91,7 +94,10 @@ export default class MenuPage extends React.Component {
                             <br />
                             {
                                 this.state.menuItems.dessertOrDrink ? <div>
-                                    <h3 className="text-center selection-2 barlow font-weight-light">Get some <span className="font-weight-bold udon-red">DESSERTS & DRINKS</span></h3>
+                                    <h3 className="text-center selection-2 barlow font-weight-light">
+                                        <img className="plus-icon" src="https://firebasestorage.googleapis.com/v0/b/info343-final-project-b0d70.appspot.com/o/plus.png?alt=media&token=532def02-8ba4-4b00-ab3e-b8740d10716c" alt="plus" />
+                                        some <span className="font-weight-bold udon-red">DESSERTS & DRINKS</span>
+                                    </h3>
                                     <div className="barlow container d-flex flex-wrap justify-content-center text-center">
                                         {
                                             Object.keys(this.state.menuItems.dessertOrDrink).map((key, index) =>
@@ -129,7 +135,7 @@ class MenuItem extends React.Component {
 
     render() {
         return (
-            <div className="menu-item px-2 my-2 mx-2 col-lg-3">
+            <div className="menu-item my-2 col-lg-3">
                 <img className="menu-pic" src={this.props.imageSource} alt={this.props.imageName} />
                 <div className="menu-japanese">
                     <p className="my-1 font-weight-bold">{this.props.itemName}</p>

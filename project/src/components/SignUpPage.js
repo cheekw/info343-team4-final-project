@@ -21,10 +21,10 @@ export default class SignUp extends React.Component {
 
     componentDidMount() {
         this.authUnsub = firebase.auth().onAuthStateChanged(user => {
-			if (user) {
-                this.props.history.push(constants.routes.home)
+            if (user) {
+                this.props.history.push(constants.routes.home);
             }
-		});
+        });
     }
 
     componentWillUnmount() {
@@ -40,6 +40,9 @@ export default class SignUp extends React.Component {
                         displayName: this.state.displayName,
                         photoURL: 'https://www.gravatar.com/avatar/' + md5(this.state.email.toLowerCase())
                     });
+                    return user;
+                })
+                .then(user => {
                     firebase.database().ref('users').child(user.uid).set({
                         'privilege': this.state.accountPrivilege,
                         'email': user.email

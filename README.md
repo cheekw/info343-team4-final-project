@@ -31,8 +31,8 @@ Our team is trying to rebuild a website for a local restaurant, U:Don. U:Don's c
 * News
 * Article Component
 * Article Submission Component
-* Ordering Form Component (Phone Number)
 * Add to Cart (Modal for Quantity)
+* Ordering Form Component (Phone Number)
 ## Framework and Libraries
 * [React](https://reactjs.org/) - Javascript Library
 * [React-Router](https://reacttraining.com/react-router/web/guides/philosophy) - Dynamic Routing

@@ -89,11 +89,11 @@ class ChangePassword extends React.Component {
         this.handlePasswordChange = this.handlePasswordChange.bind(this);
     }
 
-    handlePasswordChange() {
-        // display the error message somehow
-        // fix reloading problem
+    handlePasswordChange(event) {
+        event.preventDefault();
+        // create an error for old password mismatch
         if (this.state.newPassword === this.state.confirmPassword) {
-            if (this.state.newPassword.length < 6) {
+            if (this.state.newPassword.length >= 6) {
                 let user = firebase.auth().currentUser;
                 let credential = firebase.auth.EmailAuthProvider.credential(user.email, this.state.oldPassword);
                 user.reauthenticateWithCredential(credential)
@@ -102,7 +102,7 @@ class ChangePassword extends React.Component {
                 firebase.auth().signOut()
                     .catch(error => this.setState({ errorMessage: error.message }));
             } else {
-                this.setState({ passwordErrorMessage: 'New password needs to be six characters long' });
+                this.setState({ passwordErrorMessage: 'New passwords need to be six characters long' });
             }
         } else {
             this.setState({ passwordErrorMessage: 'New passwords do not match' });
