@@ -10,15 +10,17 @@ export default class MenuPage extends React.Component {
         super();
         this.state = {
             menuItems: {},
-            accountPrivilege: ''
+            accountPrivilege: '',
+            currUser: undefined
         };
     }
 
-    componentWillMount() {
+    componentDidMount() {
         this.menu = firebase.database().ref('menu/')
         this.menu.on('value', snapshot => this.setState({ menuItems: snapshot.val() }));
         this.authUnsub = firebase.auth().onAuthStateChanged(user => {
             if (user) {
+                this.setState({currUser: user});
                 this.userRef = firebase.database().ref('users').child(user.uid);
                 this.userRef.on('value', snapshot => {
                     let privilege = snapshot.val();
@@ -148,7 +150,7 @@ class MenuItem extends React.Component {
 
     handleEditItem() {
         this.setState({ editing: true });
-        this.menuItem.style = 'background-color: cornsilk';
+        this.menuItems.style = 'background-color: cornsilk';
     }
 
     deleteItem(key) {
@@ -192,6 +194,12 @@ class MenuItem extends React.Component {
         firebase.database().ref().update(updates);
     }
 
+    favorite(itemName) {
+        firebase.database().ref('users/' + this.state.currUser + '/favorites/' + itemName).update({
+            itemName: !firebase.database().ref('users/' + this.state.currUser + '/favorites/' + itemName).val()
+        });
+    }
+
     render() {
         return (
             <div className="menu-item my-2 col-lg-3 col-md-4" ref={menuItem => this.menuItem = menuItem}>
@@ -231,7 +239,12 @@ class MenuItem extends React.Component {
                             <button className="btn menu-button btn-secondary mr-3" type="button" onClick={() => this.handleCancelEdit()}>Cancel</button>
                         </div>
                     </form> : <div className="menu-japanese">
-                            <p className="my-1 font-weight-bold">{this.props.itemName}</p>
+                            <p className="my-1 font-weight-bold">
+                                {this.props.itemName}
+                                <svg className="svg-icon" onClick={() => this.favorite(this.props.itemName)} height="20" viewBox="0 0 20 20">
+                                    <path d="M9.719,17.073l-6.562-6.51c-0.27-0.268-0.504-0.567-0.696-0.888C1.385,7.89,1.67,5.613,3.155,4.14c0.864-0.856,2.012-1.329,3.233-1.329c1.924,0,3.115,1.12,3.612,1.752c0.499-0.634,1.689-1.752,3.612-1.752c1.221,0,2.369,0.472,3.233,1.329c1.484,1.473,1.771,3.75,0.693,5.537c-0.19,0.32-0.425,0.618-0.695,0.887l-6.562,6.51C10.125,17.229,9.875,17.229,9.719,17.073 M6.388,3.61C5.379,3.61,4.431,4,3.717,4.707C2.495,5.92,2.259,7.794,3.145,9.265c0.158,0.265,0.351,0.51,0.574,0.731L10,16.228l6.281-6.232c0.224-0.221,0.416-0.466,0.573-0.729c0.887-1.472,0.651-3.346-0.571-4.56C15.57,4,14.621,3.61,13.612,3.61c-1.43,0-2.639,0.786-3.268,1.863c-0.154,0.264-0.536,0.264-0.69,0C9.029,4.397,7.82,3.61,6.388,3.61"></path>
+                                </svg>
+                            </p>
                             <p className="my-0">{this.props.japaneseName}</p>
                             <p className="menu-desc my-0">{this.props.description}</p>
                         </div>

@@ -64,12 +64,14 @@ export default class NavBar extends React.Component {
                             <li className="nav-item mx-2">
                                 <a className="nav-link barlow" href={constants.routes.orderonline}>Order Online</a>
                             </li>
-                            {
-                                this.state.user ?
-                                    <Dropdown accountPrivilege={this.state.accountPrivilege} user={this.state.user} /> :
-                                    <SignRedirect />
-                            }
                         </ul>
+                        {
+                            this.state.user ?
+                                <ul className="nav navbar-nav navbar-right">
+                                <li><Dropdown accountPrivilege={this.state.accountPrivilege} user={this.state.user} /></li>
+                                </ul> :
+                                <SignRedirect />
+                        }
                     </div>
                 </nav>
             </div>
@@ -87,6 +89,7 @@ class Dropdown extends React.Component {
     handleSignOut(event) {
         event.preventDefault();
         firebase.auth().signOut();
+        this.props.router.push(constants.routes.home);
     }
 
     render() {

@@ -2,6 +2,10 @@ import React from 'react';
 import header from '../img/header.png';
 
 export default class HomePage extends React.Component {
+    constructor(props) {
+        super(props);
+    }
+
     render() {
         return (
             <div className="mt-2 container align-items-center">
