@@ -76,7 +76,6 @@ export default class ContactPage extends React.Component {
                             <span className="px-2"><strong>New Years Day (1/1)</strong>: Closed all day</span><br />
                         </p>
                     </div>
-
                 </div>
                 <br />
                 {
