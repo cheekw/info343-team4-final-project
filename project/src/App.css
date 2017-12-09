@@ -123,6 +123,33 @@ div.udon-red.menu-header {
     margin: none;
 }
 
+/* Inquiries Page */
+.delete-icon {
+    cursor: pointer;
+    float: right;
+    width: 20px;
+}
+
+.profile-image {
+    width: 70px;
+    margin: 0 1rem;
+}
+
+.message {
+    padding: 1rem 1rem;
+}
+
+.message-date {
+    font-size: 0.75rem;
+}
+
+.inquiries-view {
+    height: 100%;
+    display: block;
+    max-height: calc(100vh - 9rem);
+    overflow-y: scroll;
+}
+
 /* SignIn/SignUp Page */
 h1 {
     margin: 1rem;
@@ -202,7 +229,7 @@ footer {
     padding: 2rem 0;
 }
 
-.menu-item:hover {
+.menu-item:hover, .message:hover {
     background-color: #eaeaea;
 }
 

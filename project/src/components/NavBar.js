@@ -18,10 +18,7 @@ export default class NavBar extends React.Component {
             if (user) {
                 this.userRef = firebase.database().ref('users').child(user.uid);
                 this.userRef.on('value', snapshot => {
-                    let privilege = snapshot.val();
-                    if (privilege !== null) {
-                        this.setState({ accountPrivilege: privilege.privilege });
-                    }
+                    this.setState({ accountPrivilege: snapshot.val().privilege });
                 });
                 this.setState({ user: user });
             } else {
@@ -96,7 +93,7 @@ class Dropdown extends React.Component {
         return (
             <div className="dropdown">
                 <button className="nav-link barlow dropdown-toggle mx-2" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    User Settings
+                    Options
                 </button>
                 <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <p className="dropdown-header login-info barlow">Signed in as <strong>{this.props.user.displayName}</strong></p>
@@ -111,7 +108,7 @@ class Dropdown extends React.Component {
                             undefined
                     }
                     <a className="dropdown-item barlow" href={constants.routes.settings}>Settings</a>
-                    <a className="dropdown-item barlow" href={constants.routes.home} onClick={this.handleSignOut}>Sign Out</a>
+                    <a className="dropdown-item barlow" onClick={this.handleSignOut}>Sign Out</a>
                 </div>
             </div>
         );
