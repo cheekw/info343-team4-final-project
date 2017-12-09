@@ -3,9 +3,9 @@ import React from 'react';
 export default class OrderOnline extends React.Component {
     render() {
         return (
-            <div>
-                <h2 className="mx-4">Order Online</h2>
-                <p className="mx-2">
+            <div className="container center">
+                <h2 className="mx-4 my-3">Order Online</h2>
+                <p className="mx-2 mb-5">
                     <a href="https://www.trycaviar.com/t/seattle/udon--capitol-hill-3632?groups=f_online__d_clink2__p_marketing__c_merchant-links&amp;utm_medium=clink2&amp;utm_source=marketing&amp;utm_campaign=merchant-links&amp;utm_term=seattle&amp;utm_content=udon--capitol-hill-3632">
                         <img src="https://udonseattle.files.wordpress.com/2017/04/orderdelivery.jpg?w=196" width="196" height="46" srcset="https://udonseattle.files.wordpress.com/2017/04/orderdelivery.jpg?w=196&amp;zoom=2 2x" src-orig="https://udonseattle.files.wordpress.com/2017/04/orderdelivery.jpg?w=640" scale="2" alt="" />
                     </a>
