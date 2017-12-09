@@ -51,11 +51,17 @@ export default class Inquiries extends React.Component {
     render() {
         return (
             <div className="container">
+<<<<<<< HEAD:project/src/components/Inquiries.js
+                {this.state.inquiries.map(inquiry => {
+                    return (
+                        <Message email={inquiry.author.email}
+=======
                 {this.state.inquiries.map((inquiry, index) => {
                     return (
                         <Message 
                             key={index}
                             email={inquiry.author.email}
+>>>>>>> 327d01ce21c5d34ac2a31d043c5a41fe1656acee:project/src/components/InquiriesPage.js
                             name={inquiry.author.name}
                             createdAt={inquiry.createdAt}
                             inquiry={inquiry.inquiry}
@@ -82,6 +88,10 @@ class Message extends React.Component {
 
     removeMessage(event) {
         event.preventDefault();
+<<<<<<< HEAD:project/src/components/Inquiries.js
+        let user = firebase.auth().currentUser;
+=======
+>>>>>>> 327d01ce21c5d34ac2a31d043c5a41fe1656acee:project/src/components/InquiriesPage.js
         firebase.database().ref('inquiries').child(this.props.message.id).remove();
     }
 
