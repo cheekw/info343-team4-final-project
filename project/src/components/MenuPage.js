@@ -3,6 +3,7 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
 import 'firebase/storage';
+import editIcon from '../img/edit-icon.svg';
 
 export default class MenuPage extends React.Component {
     constructor() {
@@ -31,8 +32,9 @@ export default class MenuPage extends React.Component {
 
     componentWillUnmount() {
         if (this.userRef) {
-            this.userRef.off();
+            this.userRef.off('value');
         }
+        this.menu.off();
         this.authUnsub();
     }
 
@@ -53,6 +55,8 @@ export default class MenuPage extends React.Component {
                                                 <MenuItem
                                                     key={index}
                                                     itemKey={key}
+                                                    category={'udon'}
+                                                    privilege={this.state.accountPrivilege}
                                                     itemName={this.state.menuItems.udon[key].itemName}
                                                     japaneseName={this.state.menuItems.udon[key].japaneseName}
                                                     description={this.state.menuItems.udon[key].description}
@@ -78,6 +82,8 @@ export default class MenuPage extends React.Component {
                                                 <MenuItem
                                                     key={index}
                                                     itemKey={key}
+                                                    category={'side'}
+                                                    privilege={this.state.accountPrivilege}
                                                     itemName={this.state.menuItems.side[key].itemName}
                                                     japaneseName={this.state.menuItems.side[key].japaneseName}
                                                     description={this.state.menuItems.side[key].description}
@@ -104,6 +110,8 @@ export default class MenuPage extends React.Component {
                                                 <MenuItem
                                                     key={index}
                                                     itemKey={key}
+                                                    category={'dessertOrDrink'}
+                                                    privilege={this.state.accountPrivilege}
                                                     itemName={this.state.menuItems.dessertOrDrink[key].itemName}
                                                     japaneseName={this.state.menuItems.dessertOrDrink[key].japaneseName}
                                                     description={this.state.menuItems.dessertOrDrink[key].description}
@@ -128,20 +136,106 @@ export default class MenuPage extends React.Component {
 }
 
 class MenuItem extends React.Component {
-    constructor() {
-        super()
-        this.state = { editing: false };
+    constructor(props) {
+        super(props)
+        this.state = {
+            editing: false,
+            editedItemName: this.props.itemName,
+            editedJapaneseName: this.props.japaneseName,
+            editedDescription: this.props.description
+        };
+    }
+
+    handleEditItem() {
+        this.setState({ editing: true });
+        this.menuItem.style = 'background-color: cornsilk';
+    }
+
+    deleteItem(key) {
+        firebase.database().ref('menu/' + this.props.category + '/' + key).remove();
+        let storageRef = firebase.storage().ref('menu/');
+        storageRef.child(key + '/' + this.props.imageName).delete();
+    }
+
+    handleInputNewItemName(event) {
+        this.setState({ editedItemName: event.target.value });
+    }
+
+    handleInputNewJapaneseName(event) {
+        this.setState({ editedJapaneseName: event.target.value });
+    }
+
+    handleInputNewDescription(event) {
+        this.setState({ editedDescription: event.target.value });
+    }
+
+    stopEditing() {
+        this.menuItem.style = undefined;
+        this.setState({ editing: false });
+    }
+
+    handleCancelEdit() {
+        this.stopEditing();
+        this.setState({ editedItemName: this.props.itemName, editedJapaneseName: this.props.japaneseName, editedDescription: this.props.description });
+    }
+
+    handleSaveEdit() {
+        this.updateMenuItem();        
+        this.stopEditing();
+    }
+
+    updateMenuItem() {
+        let updates = {};
+        updates['menu/' + this.props.category + '/' + this.props.itemKey + '/itemName'] = this.state.editedItemName;
+        updates['menu/' + this.props.category + '/' + this.props.itemKey + '/japaneseName'] = this.state.editedJapaneseName;
+        updates['menu/' + this.props.category + '/' + this.props.itemKey + '/description'] = this.state.editedDescription;
+        firebase.database().ref().update(updates);
     }
 
     render() {
         return (
-            <div className="menu-item my-2 col-lg-3">
+            <div className="menu-item my-2 col-lg-3 col-md-4" ref={menuItem => this.menuItem = menuItem}>
+                {
+                    this.props.privilege === 'admin' ? <div>
+                        <img className="edit-icon" src={editIcon} alt="options" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" />
+                        <div className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu">
+                            <div className="dropdown-header">Options</div>
+                            <div>
+                                <div className="dropdown-item" onClick={() => this.handleEditItem()}>
+                                    Edit item
+                                </div>
+                                <div className="dropdown-item" onClick={() => this.deleteItem(this.props.itemKey)}>
+                                    Delete item
+                                </div>
+                            </div>
+                        </div>
+                    </div> : undefined
+                }
                 <img className="menu-pic" src={this.props.imageSource} alt={this.props.imageName} />
-                <div className="menu-japanese">
-                    <p className="my-1 font-weight-bold">{this.props.itemName}</p>
-                    <p className="my-0">{this.props.japaneseName}</p>
-                    <p className="menu-desc my-0">{this.props.description}</p>
-                </div>
+                {
+                    this.state.editing ? <form className="menu-japanese">
+                        <input className="menu-input form-control font-weight-bold" required 
+                            value={this.state.editedItemName}
+                            onInput={event => this.handleInputNewItemName(event)}
+                        />
+                        <input className="menu-input form-control" required 
+                            value={this.state.editedJapaneseName}
+                            onInput={event => this.handleInputNewJapaneseName(event)}                            
+                        />
+                        <textarea className="menu-input form-control menu-desc" rows="5" required
+                            value={this.state.editedDescription} 
+                            onInput={event => this.handleInputNewDescription(event)}                                                        
+                        />
+                        <div className="edit-buttons">
+                            <button className="btn menu-button btn-success ml-3" type="button" onClick={() => this.handleSaveEdit()}>Save</button>
+                            <button className="btn menu-button btn-secondary mr-3" type="button" onClick={() => this.handleCancelEdit()}>Cancel</button>
+                        </div>
+                    </form> : <div className="menu-japanese">
+                            <p className="my-1 font-weight-bold">{this.props.itemName}</p>
+                            <p className="my-0">{this.props.japaneseName}</p>
+                            <p className="menu-desc my-0">{this.props.description}</p>
+                        </div>
+                }
             </div>
         );
     }
@@ -217,7 +311,6 @@ class AddMenuItem extends React.Component {
     }
 
     handleUpdateMenuItem(event, key, fileName, imageUrl) {
-        event.preventDefault();
         let menuData = {
             imageSource: imageUrl,
             imageName: fileName,
@@ -237,7 +330,7 @@ class AddMenuItem extends React.Component {
     render() {
         return (
             <div className="center">
-                <button className="btn btn-dark" data-toggle="modal" data-target="#addMenuItem">Add Menu Item</button>
+                <button className="btn btn-dark mt-4" data-toggle="modal" data-target="#addMenuItem">Add Menu Item</button>
                 <div className="modal fade" id="addMenuItem" tabIndex="-1" role="dialog" aria-labelledby="addMenuItemLabel" aria-hidden="true">
                     <div className="modal-dialog" role="document">
                         <form className="modal-content" onSubmit={event => this.handleAddMenuItem(event)}>
