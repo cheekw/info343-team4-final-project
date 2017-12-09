@@ -8,7 +8,7 @@ import Inquiries from './components/InquiriesPage';
 import Mission from './components/MissionPage';
 import Menu from './components/MenuPage';
 import NavBar from './components/NavBar';
-import OnlineOrdering from './components/OnlineOrderingPage';
+import OrderOnline from './components/OrderOnlinePage';
 import SignUp from './components/SignUpPage';
 import SignIn from './components/SignInPage';
 import UserSettings from './components/UserSettingPage';
@@ -30,7 +30,7 @@ class App extends Component {
 						<Route exact path={constants.routes.locations} component={Locations} />
 						<Route exact path={constants.routes.mission} component={Mission} />
 						<Route exact path={constants.routes.menu} component={Menu} />
-						<Route exact path={constants.routes.onlineordering} component={OnlineOrdering} />
+						<Route exact path={constants.routes.orderonline} component={OrderOnline} />
 						<Route exact path={constants.routes.signup} component={SignUp} />
 						<Route exact path={constants.routes.signin} component={SignIn} />
 						<Route exact path={constants.routes.settings} component={UserSettings} />
