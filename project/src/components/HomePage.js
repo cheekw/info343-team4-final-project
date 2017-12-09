@@ -9,7 +9,7 @@ export default class HomePage extends React.Component {
                     <img id="logo-image" src="https://udonseattle.files.wordpress.com/2011/12/logo-bowl.png" alt="bowl" />
                 </div>
                 <div className="text-center barlow">
-                    <h2 >Easy as <span className="udon-red">1, 2, 3!</span></h2>
+                    <h2 className="mb-4">Easy as <span className="udon-red">1, 2, 3!</span></h2>
                 </div>
                 <div className="barlow d-flex flex-wrap justify-content-center my-2">
                     <div className="steps mx-4">
