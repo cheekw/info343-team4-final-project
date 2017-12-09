@@ -3,6 +3,7 @@ import firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/database';
 import 'firebase/storage';
+import editIcon from '../img/edit-icon.svg';
 
 export default class MenuPage extends React.Component {
     constructor() {
@@ -53,6 +54,8 @@ export default class MenuPage extends React.Component {
                                                 <MenuItem
                                                     key={index}
                                                     itemKey={key}
+                                                    category={'udon'}
+                                                    privilege={this.state.accountPrivilege}
                                                     itemName={this.state.menuItems.udon[key].itemName}
                                                     japaneseName={this.state.menuItems.udon[key].japaneseName}
                                                     description={this.state.menuItems.udon[key].description}
@@ -78,6 +81,8 @@ export default class MenuPage extends React.Component {
                                                 <MenuItem
                                                     key={index}
                                                     itemKey={key}
+                                                    category={'side'}
+                                                    privilege={this.state.accountPrivilege}
                                                     itemName={this.state.menuItems.side[key].itemName}
                                                     japaneseName={this.state.menuItems.side[key].japaneseName}
                                                     description={this.state.menuItems.side[key].description}
@@ -104,6 +109,8 @@ export default class MenuPage extends React.Component {
                                                 <MenuItem
                                                     key={index}
                                                     itemKey={key}
+                                                    category={'dessertOrDrink'}
+                                                    privilege={this.state.accountPrivilege}
                                                     itemName={this.state.menuItems.dessertOrDrink[key].itemName}
                                                     japaneseName={this.state.menuItems.dessertOrDrink[key].japaneseName}
                                                     description={this.state.menuItems.dessertOrDrink[key].description}
@@ -128,20 +135,78 @@ export default class MenuPage extends React.Component {
 }
 
 class MenuItem extends React.Component {
-    constructor() {
-        super()
-        this.state = { editing: false };
+    constructor(props) {
+        super(props)
+        this.state = {
+            editing: false
+        };
+    }
+
+    // handleCancelEdit() {
+    //     this.setState({ editedMessage: this.props.messageBody });
+    // }
+
+    // handleSaveEdit() {
+    //     this.updateMessage();
+    // }
+
+    // updateMenuItem() {
+    //     let updates = {};
+    //     updates['menu/' + this.props.category + '/' + this.props.itemKey + '/itemName'] = this.state.editedName;
+    //     updates['menu/' + this.props.category + '/' + this.props.itemKey + '/japaneseName'] = this.state.editedJapaneseName;        
+    //     updates['messages/' + this.props.category + '/' + this.props.itemKey+ '/description'] = this.state.editedDescription;
+    //     firebase.database().ref().update(updates);
+    // }
+
+    handleEditItem() {
+        this.setState({ editing: true });
+        this.menuItem.style = 'background-color: cornsilk';
+    }
+
+    deleteItem(key) {
+        console.log(this.props.category);
+        firebase.database().ref('menu/' + this.props.category + '/' + key).remove();
+        let storageRef = firebase.storage().ref('menu/');
+        storageRef.child(key + '/' + this.props.imageName).delete();
     }
 
     render() {
         return (
-            <div className="menu-item my-2 col-lg-3">
+            <div className="menu-item my-2 col-lg-3 col-md-4" ref={menuItem => this.menuItem = menuItem}>
+                {
+                    this.props.privilege === 'admin' ? <div>
+                        <img className="edit-icon" src={editIcon} alt="options" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" />
+                        <div className="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenu">
+                            <div className="dropdown-header">Options</div>
+                            <div>
+                                <div className="dropdown-item" onClick={() => this.handleEditItem()}>
+                                    Edit item
+                                </div>
+                                <div className="dropdown-item" onClick={() => this.deleteItem(this.props.itemKey)}>
+                                    Delete item
+                                </div>
+                            </div>
+                        </div>
+                    </div> : undefined
+                }
                 <img className="menu-pic" src={this.props.imageSource} alt={this.props.imageName} />
-                <div className="menu-japanese">
-                    <p className="my-1 font-weight-bold">{this.props.itemName}</p>
-                    <p className="my-0">{this.props.japaneseName}</p>
-                    <p className="menu-desc my-0">{this.props.description}</p>
-                </div>
+                {
+                    this.state.editing ? <div className="menu-japanese">
+                        <input className="menu-input form-control font-weight-bold" />
+                        <input className="menu-input form-control" />
+                        <textarea className="menu-input form-control menu-desc" />
+                    </div> : <div className="menu-japanese">
+                            <p className="my-1 font-weight-bold">{this.props.itemName}</p>
+                            <p className="my-0">{this.props.japaneseName}</p>
+                            <p className="menu-desc my-0">{this.props.description}</p>
+                        </div>
+                }
+                {/* {
+                    this.state.editing ? <div className="edit-buttons">
+                        <button className="btn btn-small" type="button" onClick={() => this.handleCancelEdit()}>Cancel</button>
+                        <button className="btn btn-small" type="button" onClick={() => this.handleSaveEdit()}>Save</button>
+                    </div> : undefined
+                } */}
             </div>
         );
     }

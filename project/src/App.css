@@ -85,7 +85,8 @@ div.udon-red.menu-header {
 }
 
 #logo-bowl {
-    max-height: 160px;
+    width:100%;
+    max-width: 700px;
 	margin-top: 20px;
 }
 
@@ -109,6 +110,21 @@ div.udon-red.menu-header {
 }
 
 /* Menu Page */
+.edit-icon {
+    float: right;
+    cursor: pointer;
+    width: 20px;
+    margin-right: 10px;
+}
+
+.menu-item {
+    padding: 2rem 0;
+}
+
+.menu-item:hover {
+    background-color: #eaeaea;
+}
+
 .menu-container {
     margin: auto;
 }
@@ -159,6 +175,8 @@ div.udon-red {
 }
 
 .menu-pic {
+    max-height: 170px;
+    max-width: 170px;
 	margin: 0 auto;
 }
 
@@ -214,7 +232,14 @@ div.udon-red {
     margin-top: 1rem;
 }
 
-@media (min-width: 726px) {
+.menu-input {
+    text-align: center;
+    width: 50%;
+    margin: 1rem;
+    padding: 5px;
+}
+
+@media (min-width: 768px) {
     .selection-1 {
         font-size: 50px;
     }

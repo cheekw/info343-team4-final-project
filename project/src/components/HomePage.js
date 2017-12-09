@@ -1,15 +1,15 @@
 import React from 'react';
+import header from '../img/header.png';
 
 export default class HomePage extends React.Component {
     render() {
         return (
             <div className="mt-2 container align-items-center">
-                <div className="hide flex-nowrap justify-content-center">
-                    <img id="logo-bowl" src="https://i.imgur.com/bL3Puos.png" alt="logo" />
-                    <img id="logo-image" src="https://udonseattle.files.wordpress.com/2011/12/logo-bowl.png" alt="bowl" />
+                <div className="mx-auto text-center">
+                    <img id="logo-bowl" src={header} alt="logo" />
                 </div>
                 <div className="text-center barlow">
-                    <h2 className="mb-4">Easy as <span className="udon-red">1, 2, 3!</span></h2>
+                    <h2 className="my-5">Easy as <span className="udon-red">1, 2, 3!</span></h2>
                 </div>
                 <div className="barlow d-flex flex-wrap justify-content-center my-2">
                     <div className="steps mx-4">
