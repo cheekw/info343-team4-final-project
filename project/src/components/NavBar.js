@@ -62,7 +62,7 @@ export default class NavBar extends React.Component {
                                 <a className="nav-link barlow" href={constants.routes.contact}>Contact Us</a>
                             </li>
                             <li className="nav-item mx-2">
-                                <a className="nav-link barlow" href={constants.routes.onlineordering}>Order Online</a>
+                                <a className="nav-link barlow" href={constants.routes.orderonline}>Order Online</a>
                             </li>
                             {
                                 this.state.user ?
@@ -86,9 +86,7 @@ class Dropdown extends React.Component {
     // figure out how to transition to home screen after signing out
     handleSignOut(event) {
         event.preventDefault();
-        firebase.auth().signOut()
-            .catch(error => this.setState({ errorMessage: error.message }));
-            // .then(() => this.props.history.push(constants.routes.home));
+        firebase.auth().signOut();
     }
 
     render() {
@@ -100,17 +98,17 @@ class Dropdown extends React.Component {
                 <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
                     <p className="dropdown-header login-info barlow">Signed in as <strong>{this.props.user.displayName}</strong></p>
                     {
-                        this.props.accountPrivilege==="admin" ?
+                        this.props.accountPrivilege === "admin" ?
                             <a className="dropdown-item barlow" href={constants.routes.analytics}>Analytics</a> :
                             undefined
                     }
                     {
-                        this.props.accountPrivilege==="admin" ?
+                        this.props.accountPrivilege === "admin" ?
                             <a className="dropdown-item barlow" href={constants.routes.inquiries}>Inquiries</a> :
                             undefined
                     }
                     <a className="dropdown-item barlow" href={constants.routes.settings}>Settings</a>
-                    <a type="submit" className="dropdown-item barlow" onClick={this.handleSignOut}>Sign Out</a>
+                    <a className="dropdown-item barlow" href={constants.routes.home} onClick={this.handleSignOut}>Sign Out</a>
                 </div>
             </div>
         );

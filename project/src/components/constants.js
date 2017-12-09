@@ -7,7 +7,7 @@ export default {
         mission: '/mission',
         menu: '/menu',
         inquiries: '/inquiries',
-        onlineordering: '/onlineordering',
+        orderonline: '/orderonline',
         settings: '/settings',
         signup: '/signup',
         signin: '/signin',

@@ -12,7 +12,6 @@ export default class SignUp extends React.Component {
         this.state = {
             displayName: '',
             email: '',
-            favorite: [],
             password: '',
             passwordConfirmation: ''
         };
@@ -45,16 +44,8 @@ export default class SignUp extends React.Component {
                 .then(user => {
                     firebase.database().ref('users').child(user.uid).set({
                         email: user.email,
-                        favorite: {
-                            dessertOrDrink: {
+                        favorites: {
 
-                            },
-                            side: {
-
-                            },
-                            udon: {
-
-                            }
                         },
                         privilege: 'user'
                     });
