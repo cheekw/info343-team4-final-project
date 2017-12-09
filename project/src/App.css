@@ -356,6 +356,17 @@ div.udon-red {
     padding: 0.5rem;
 }
 
+.favorite-icon {
+    float: right;
+    cursor: pointer;
+    width: 20px;
+    margin-right: 10px;
+}
+
+.favorite-icon:hover path {
+    fill: yellow;
+}
+
 @media (min-width: 768px) {
     .selection-1 {
         font-size: 50px;

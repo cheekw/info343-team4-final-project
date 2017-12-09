@@ -4,11 +4,15 @@ import 'firebase/auth';
 import 'firebase/database';
 import 'firebase/storage';
 import editIcon from '../img/edit-icon.svg';
+import favoriteIcon from '../img/star.svg';
+import favoriteIcon2 from '../img/star2.svg';
 
 export default class MenuPage extends React.Component {
     constructor() {
         super();
         this.state = {
+            currentUser: undefined,
+            favorites: {},
             menuItems: {},
             accountPrivilege: ''
         };
@@ -26,6 +30,9 @@ export default class MenuPage extends React.Component {
                         this.setState({ accountPrivilege: privilege.privilege });
                     }
                 });
+                this.setState({ currentUser: user});
+                this.favorites = firebase.database().ref('users/' + user.uid + '/favorites');
+                this.favorites.on('value', snapshot => this.setState({ favorites: snapshot.val() }));  
             }
         });
     }
@@ -35,6 +42,7 @@ export default class MenuPage extends React.Component {
             this.userRef.off('value');
         }
         this.menu.off();
+        this.favorites.off();
         this.authUnsub();
     }
 
@@ -63,6 +71,8 @@ export default class MenuPage extends React.Component {
                                                     itemPrice={this.state.menuItems.udon[key].itemPrice}
                                                     imageSource={this.state.menuItems.udon[key].imageSource}
                                                     imageName={this.state.menuItems.udon[key].imageName}
+                                                    favorite={this.state.favorites ? this.state.favorites[key] : undefined}
+                                                    uid={this.state.currentUser ? this.state.currentUser.uid : undefined}
                                                 />
                                             )
                                         } </div>
@@ -90,6 +100,8 @@ export default class MenuPage extends React.Component {
                                                     itemPrice={this.state.menuItems.side[key].itemPrice}
                                                     imageSource={this.state.menuItems.side[key].imageSource}
                                                     imageName={this.state.menuItems.side[key].imageName}
+                                                    favorite={this.state.favorites ? this.state.favorites[key] : undefined}
+                                                    uid={this.state.currentUser ? this.state.currentUser.uid : undefined}
                                                 />
                                             )
                                         }
@@ -118,6 +130,8 @@ export default class MenuPage extends React.Component {
                                                     itemPrice={this.state.menuItems.dessertOrDrink[key].itemPrice}
                                                     imageSource={this.state.menuItems.dessertOrDrink[key].imageSource}
                                                     imageName={this.state.menuItems.dessertOrDrink[key].imageName}
+                                                    favorite={this.state.favorites ? this.state.favorites[key] : undefined}
+                                                    uid={this.state.currentUser ? this.state.currentUser.uid : undefined}
                                                 />
                                             )
                                         }
@@ -139,6 +153,7 @@ class MenuItem extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
+            favorite: this.props.favorite,
             editing: false,
             editedItemName: this.props.itemName,
             editedJapaneseName: this.props.japaneseName,
@@ -150,6 +165,11 @@ class MenuItem extends React.Component {
         this.handleInputNewDescription = this.handleInputNewDescription.bind(this);
         this.stopEditing = this.stopEditing.bind(this);
         this.handleCancelEdit = this.handleCancelEdit.bind(this);
+        this.handleUpdateFavorite = this.handleUpdateFavorite.bind(this);
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({favorite: nextProps.favorite});
     }
 
     handleEditItem() {
@@ -186,8 +206,15 @@ class MenuItem extends React.Component {
     }
 
     handleSaveEdit() {
-        this.updateMenuItem();        
+        this.updateMenuItem();
         this.stopEditing();
+    }
+
+    handleUpdateFavorite() {
+        let updates = {};
+        updates['users/' + this.props.uid + '/favorites/' + this.props.itemKey] = !this.state.favorite;
+        firebase.database().ref().update(updates);
+        this.setState({ favorite: !this.state.favorite });
     }
 
     updateMenuItem() {
@@ -217,20 +244,33 @@ class MenuItem extends React.Component {
                         </div>
                     </div> : undefined
                 }
+                {
+                    this.props.privilege === 'user' ? <div>
+                        {
+                            this.state.favorite ? 
+                            <img className="favorite-icon" src={favoriteIcon2} alt="favorite" 
+                                onClick={() => this.handleUpdateFavorite()}
+                            /> : 
+                            <img className="favorite-icon" src={favoriteIcon} alt="favorite" 
+                                onClick={() => this.handleUpdateFavorite()}                            
+                            />
+                        }
+                    </div> : undefined
+                }
                 <img className="menu-pic" src={this.props.imageSource} alt={this.props.imageName} />
                 {
                     this.state.editing ? <form className="menu-japanese">
-                        <input className="menu-input form-control font-weight-bold" required 
+                        <input className="menu-input form-control font-weight-bold" required
                             value={this.state.editedItemName}
                             onInput={event => this.handleInputNewItemName(event)}
                         />
-                        <input className="menu-input form-control" required 
+                        <input className="menu-input form-control" required
                             value={this.state.editedJapaneseName}
-                            onInput={event => this.handleInputNewJapaneseName(event)}                            
+                            onInput={event => this.handleInputNewJapaneseName(event)}
                         />
                         <textarea className="menu-input form-control menu-desc" rows="5" required
-                            value={this.state.editedDescription} 
-                            onInput={event => this.handleInputNewDescription(event)}                                                        
+                            value={this.state.editedDescription}
+                            onInput={event => this.handleInputNewDescription(event)}
                         />
                         <div className="edit-buttons">
                             <button className="btn menu-button btn-success ml-3" type="button" onClick={() => this.handleSaveEdit()}>Save</button>
@@ -242,7 +282,7 @@ class MenuItem extends React.Component {
                             <p className="menu-desc my-0">{this.props.description}</p>
                         </div>
                 }
-            </div>
+            </div >
         );
     }
 }
