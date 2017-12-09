@@ -328,3 +328,11 @@ footer {
 .udon-address {
 	font-weight: 24px;
 }
+
+/* Analytics */
+
+.chart-view {
+    display: block;
+    max-height: 70%;
+    margin-bottom: 3rem;
+}

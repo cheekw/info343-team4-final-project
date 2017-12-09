@@ -1,5 +1,5 @@
 import React from 'react';
-import {Bar} from 'react-chartjs-2';
+import {HorizontalBar} from 'react-chartjs-2';
 
 const data = {
     labels: ['Soup 1', 'Soup 2', 'Soup 3', 'Soup 4', 'Soup 5', 'Soup 6', 'Soup 7', 'Soup 8', 'Soup 9', 'Soup 10', 'Soup 11', 'Soup 12'],
@@ -27,14 +27,15 @@ const data = {
       
         render() {
           return (
-            <div className="container">
+            <div className="container chart-view text-center">
               <h2>Most Favorited Soups</h2>
-              <Bar
+              <HorizontalBar
                 data={data}
-                width={50}
-                height={50}
+                width={1000}
+                height={300}
                 options={{
-                  maintainAspectRatio: false
+                    responsive: true,
+                    maintainAspectRatio: false
                 }}
               />
             </div>
