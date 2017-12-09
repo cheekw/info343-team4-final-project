@@ -40,32 +40,37 @@ export default class NavBar extends React.Component {
     render() {
         return (
             <div>
-                <nav className="navbar navbar-expand-md">
+                <nav className="navbar navbar-expand-md navbar-light">
                     <a className="navbar-brand" href={constants.routes.home}>
                         <img src="http://www.mataro-parc.com/sites/default/files/field/operador-logo/udon_-_logo.jpg" alt="udon-logo" />
                     </a>
-                    <ul className="navbar-nav mr-auto">
-                        <li className="nav-item mx-2">
-                            <a className="nav-link barlow" href={constants.routes.menu}>Menu</a>
-                        </li>
-                        <li className="nav-item mx-2">
-                            <a className="nav-link barlow" href={constants.routes.mission}>Our Mission</a>
-                        </li>
-                        <li className="nav-item mx-2">
-                            <a className="nav-link barlow" href={constants.routes.locations}>Locations</a>
-                        </li>
-                        {
-                            this.state.user ? <li className="nav-item mx-2">
-                                <a className="nav-link barlow" href={constants.routes.contact}>Contact Us</a>
-                            </li> : undefined
-                        }
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul className="navbar-nav mr-auto">
+                            <li className="nav-item mx-2">
+                                <a className="nav-link barlow" href={constants.routes.menu}>Menu</a>
+                            </li>
+                            <li className="nav-item mx-2">
+                                <a className="nav-link barlow" href={constants.routes.mission}>Our Mission</a>
+                            </li>
+                            <li className="nav-item mx-2">
+                                <a className="nav-link barlow" href={constants.routes.locations}>Locations</a>
+                            </li>
+                            {
+                                this.state.user ? <li className="nav-item mx-2">
+                                    <a className="nav-link barlow" href={constants.routes.contact}>Contact Us</a>
+                                </li> : undefined
+                            }
 
-                        {
-                            this.state.user ?
-                                <Dropdown user={this.state.user} /> :
-                                <SignRedirect />
-                        }
-                    </ul>
+                            {
+                                this.state.user ?
+                                    <Dropdown user={this.state.user} /> :
+                                    <SignRedirect />
+                            }
+                        </ul>
+                    </div>
                 </nav>
             </div>
         );

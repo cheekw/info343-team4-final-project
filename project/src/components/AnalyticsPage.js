@@ -5,7 +5,47 @@ var chartData = [
     {
       udonName: "Soup Udon",
       favorites: 5
-    }
+    },
+    {
+        udonName: "Soup Udon",
+        favorites: 5
+    },
+    {
+        udonName: "Soup Udon",
+        favorites: 5
+      },
+      {
+        udonName: "Soup Udon",
+        favorites: 5
+      },
+      {
+        udonName: "Soup Udon",
+        favorites: 5
+      },
+      {
+        udonName: "Soup Udon",
+        favorites: 5
+      },
+      {
+        udonName: "Soup Udon",
+        favorites: 5
+      },
+      {
+        udonName: "Soup Udon",
+        favorites: 5
+      },
+      {
+        udonName: "Soup Udon",
+        favorites: 5
+      },
+      {
+        udonName: "Soup Udon",
+        favorites: 5
+      },
+      {
+        udonName: "Soup Udon",
+        favorites: 5
+      },
     
 ]
 

@@ -16,6 +16,20 @@ input[type="button"], input[type="submit"], input[type="reset"], input[type="fil
     -webkit-appearance: none;
 }
 
+.bolder {
+    font-weight: bolder;
+}
+
+.hide {
+    display: none;
+}
+
+@media (min-width: 768px) {
+    .hide {
+        display: flex;
+    }
+}
+
 /* Navbar Page */
 nav a {
 	color: lightgrey;
@@ -56,12 +70,6 @@ nav img {
 	padding-bottom: 8px;
 }
 
-@media (max-width: 768px) {
-	.navbar {
-		display: none;
-	}
-}
-
 /* Home Page */
 .steps {
 	font-size: 20px;
@@ -77,8 +85,12 @@ div.udon-red.menu-header {
 }
 
 #logo-bowl {
-	max-height: 180px;
+    max-height: 160px;
 	margin-top: 20px;
+}
+
+#logo-image {
+    max-height: 250px;
 }
 
 .hours-list {
@@ -189,10 +201,6 @@ div.udon-red {
     max-width: 150px;
 }
 
-.hide {
-    display: none;
-}
-
 .alert {
     margin-top: 1rem;
 }
@@ -277,6 +285,8 @@ footer {
 	padding-left: 22px;
 }
 
-svg {
-	fill: black;
+/* Locations */
+
+.udon-address {
+	font-weight: 24px;
 }

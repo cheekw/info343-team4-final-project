@@ -34,7 +34,7 @@ export default class ContactPage extends React.Component {
             },
             inquiry: this.state.inquiry
         };
-        let key = firebase.database().ref().child('inquiries/' + this.state.currentChannel).push().key;
+        let key = firebase.database().ref().child('inquiries/').push().key;
         let updates = {};
         updates['inquiries/' + key] = inquiryData;
         firebase.database().ref().update(updates).then(window.alert("We will try to contact you soon!"));
