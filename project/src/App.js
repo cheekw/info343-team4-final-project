@@ -4,7 +4,7 @@ import Analytics from './components/AnalyticsPage';
 import Contact from './components/ContactPage';
 import Footer from './components/Footer';
 import Home from './components/HomePage';
-import Inquiries from './components/Inquiries';
+import Inquiries from './components/InquiriesPage';
 import Mission from './components/MissionPage';
 import Menu from './components/MenuPage';
 import NavBar from './components/NavBar';

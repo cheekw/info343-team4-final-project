@@ -26,6 +26,7 @@ export default class Inquiries extends React.Component {
                                     email: inquiries[inquiry].author.email,
                                     name: inquiries[inquiry].author.name
                                 },
+                                createdAt: inquiries[inquiry].createdAt,
                                 inquiry: inquiries[inquiry].inquiry
                             });
                         }
@@ -49,12 +50,12 @@ export default class Inquiries extends React.Component {
 
     render() {
         return (
-            <div>
-                <div></div>
+            <div className="container">
                 {this.state.inquiries.map(inquiry => {
                     return (
-                        <Mail email={inquiry.author.email}
+                        <Message email={inquiry.author.email}
                             name={inquiry.author.name}
+                            createdAt={inquiry.createdAt}
                             inquiry={inquiry.inquiry}
                         />
                     );
@@ -64,16 +65,31 @@ export default class Inquiries extends React.Component {
     }
 }
 
-class Mail extends React.Component {
+class Message extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {};
+        this.formatTime = this.formatTime.bind(this);
+        this.removeMessage = this.removeMessage.bind(this);
+    }
+
+    formatTime(timestamp) {
+        let date = new Date(timestamp);
+        return "" + date;
+    }
+
+    removeMessage(event) {
+        event.preventDefault();
+        let user = firebase.auth().currentUser;
+        firebase.database().ref('inquiries').child(this.props.message.id).remove();
+    }
+
     render() {
         return (
-            <div>
-                <div>
-                    <p>{this.props.email}</p>
-                    <p>{this.props.name}</p>
-                </div>
-                <div>
-                    <p>{this.props.inquiry}</p>
+            <div className="container">
+                <div className="">
+                    <p className="barlow">{this.props.email} <span className="barlow ">{this.formatTime(this.props.createdAt)}</span></p>
+                    <p className="barlow">{this.props.inquiry}</p>
                 </div>
             </div>
         );
