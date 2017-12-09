@@ -58,6 +58,9 @@ export default class NavBar extends React.Component {
                             <li className="nav-item mx-2">
                                 <a className="nav-link barlow" href={constants.routes.locations}>Locations</a>
                             </li>
+                            <li className="nav-item mx-2">
+                                <a className="nav-link barlow" href={constants.routes.analytics}>Analytics</a>
+                            </li>
                             {
                                 this.state.user ? <li className="nav-item mx-2">
                                     <a className="nav-link barlow" href={constants.routes.contact}>Contact Us</a>
