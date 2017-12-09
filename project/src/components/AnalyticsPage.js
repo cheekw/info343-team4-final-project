@@ -17,11 +17,17 @@ const data = {
   };
 
     export default class AnalyticsPage extends  React.Component{
-
+        constructor() {
+            super();
+            this.state = {
+                menuItems: {},
+                accountPrivilege: ''
+            };
+        }
       
         render() {
           return (
-            <div>
+            <div className="container">
               <h2>Most Favorited Soups</h2>
               <Bar
                 data={data}
