@@ -24,6 +24,11 @@ input[type="button"], input[type="submit"], input[type="reset"], input[type="fil
     display: none;
 }
 
+.no-gutter {
+    margin: 0;
+    padding: 0;
+}
+
 @media (min-width: 768px) {
     .hide {
         display: flex;

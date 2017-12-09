@@ -142,21 +142,21 @@ class MenuItem extends React.Component {
         };
     }
 
-    // handleCancelEdit() {
-    //     this.setState({ editedMessage: this.props.messageBody });
-    // }
+    handleCancelEdit() {
+        this.setState({ editedMessage: this.props.messageBody });
+    }
 
-    // handleSaveEdit() {
-    //     this.updateMessage();
-    // }
+    handleSaveEdit() {
+        this.updateMessage();
+    }
 
-    // updateMenuItem() {
-    //     let updates = {};
-    //     updates['menu/' + this.props.category + '/' + this.props.itemKey + '/itemName'] = this.state.editedName;
-    //     updates['menu/' + this.props.category + '/' + this.props.itemKey + '/japaneseName'] = this.state.editedJapaneseName;        
-    //     updates['messages/' + this.props.category + '/' + this.props.itemKey+ '/description'] = this.state.editedDescription;
-    //     firebase.database().ref().update(updates);
-    // }
+    updateMenuItem() {
+        let updates = {};
+        updates['menu/' + this.props.category + '/' + this.props.itemKey + '/itemName'] = this.state.editedName;
+        updates['menu/' + this.props.category + '/' + this.props.itemKey + '/japaneseName'] = this.state.editedJapaneseName;        
+        updates['messages/' + this.props.category + '/' + this.props.itemKey+ '/description'] = this.state.editedDescription;
+        firebase.database().ref().update(updates);
+    }
 
     handleEditItem() {
         this.setState({ editing: true });
@@ -282,7 +282,6 @@ class AddMenuItem extends React.Component {
     }
 
     handleUpdateMenuItem(event, key, fileName, imageUrl) {
-        event.preventDefault();
         let menuData = {
             imageSource: imageUrl,
             imageName: fileName,
