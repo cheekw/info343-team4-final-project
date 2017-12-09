@@ -146,8 +146,8 @@ class MenuItem extends React.Component {
         };
         this.handleEditItem = this.handleEditItem.bind(this);
         this.handleInputNewItemName = this.handleInputNewItemName.bind(this);
-        this.handleInputNewJapaneseName = this.handleInputJapaneseName.bind(this);
-        this.handleInputNewDescription = this.handleInputDescription.bind(this);
+        this.handleInputNewJapaneseName = this.handleInputNewJapaneseName.bind(this);
+        this.handleInputNewDescription = this.handleInputNewDescription.bind(this);
         this.stopEditing = this.stopEditing.bind(this);
         this.handleCancelEdit = this.handleCancelEdit.bind(this);
     }
