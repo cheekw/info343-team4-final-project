@@ -29,12 +29,6 @@ input[type="button"], input[type="submit"], input[type="reset"], input[type="fil
     padding: 0;
 }
 
-@media (min-width: 768px) {
-    .hide {
-        display: flex;
-    }
-}
-
 /* Navbar Page */
 nav a {
 	color: lightgrey;
@@ -114,6 +108,87 @@ div.udon-red.menu-header {
 	text-decoration-color: black;
 }
 
+/* Locations */
+.udon-address {
+	font-weight: 24px;
+}
+
+/* Contact Page */
+#business-hours {
+	background-color: rgba(255, 0, 0, 0.1);
+	padding: 8px;
+}
+
+.inquiry-input.form-control {
+    margin: none;
+}
+
+/* SignIn/SignUp Page */
+h1 {
+    margin: 1rem;
+    font-weight: bolder;
+}
+
+.form-control {
+    width: 100%;
+    border-radius: 3px;
+    font: inherit;
+    font-size: 1.1rem;
+    padding: 12px 20px;
+    border: 1px solid rgb(157, 157, 157);
+    box-sizing: border-box;
+}
+
+.initial-page .form-control {
+    max-width: 320px;    
+    margin: auto;
+}
+
+.btn {
+    max-width: 320px;
+    width: 100%;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border-radius: 3px;
+    border: none;
+    cursor: pointer;
+}
+
+/* Settings Page */
+.delete-btn, .user-delete {
+    color: #cb2431;
+}
+
+.settings-btn {
+    background-color: lightgrey;
+}
+
+.user-settings {
+    border-bottom: 1px #e1e4e8 solid;
+    padding-bottom: 8px;
+}
+
+/* Footer Page */
+footer { 
+	font-family: "Open Sans", Helvetica, Arial, sans-serif;
+}
+
+#icons {
+	padding-left: 22px;
+}
+
+/* Locations */
+.udon-address {
+	font-weight: 24px;
+}
+
+/* Analytics */
+.chart-view {
+    display: block;
+    max-height: 70%;
+    margin-bottom: 5rem;
+}
+
 /* Menu Page */
 .edit-icon {
     float: right;
@@ -123,6 +198,7 @@ div.udon-red.menu-header {
 }
 
 .menu-item {
+    text-align: center;
     padding: 2rem 0;
 }
 
@@ -238,10 +314,19 @@ div.udon-red {
 }
 
 .menu-input {
+    margin: 10px auto;
     text-align: center;
-    width: 50%;
-    margin: 1rem;
-    padding: 5px;
+    width: 85%;
+    padding: 3px;
+}
+
+.edit-buttons {
+    display: flex;
+}
+
+.menu-button {
+    margin: 0.2rem;
+    padding: 0.5rem;
 }
 
 @media (min-width: 768px) {
@@ -256,88 +341,4 @@ div.udon-red {
     .plus-icon {
         width: 50px
     }
-}
-/* Mission Page */
-
-/* Locations */
-.udon-address {
-	font-weight: 24px;
-}
-
-/* Contact Page */
-#business-hours {
-	background-color: rgba(255, 0, 0, 0.1);
-	padding: 8px;
-}
-
-.inquiry-input.form-control {
-    margin: none;
-}
-
-/* SignIn/SignUp Page */
-h1 {
-    margin: 1rem;
-    font-weight: bolder;
-}
-
-.form-control {
-    width: 100%;
-    border-radius: 3px;
-    font: inherit;
-    font-size: 1.1rem;
-    padding: 12px 20px;
-    border: 1px solid rgb(157, 157, 157);
-    box-sizing: border-box;
-}
-
-.initial-page .form-control {
-    max-width: 320px;    
-    margin: auto;
-}
-
-.btn {
-    max-width: 320px;
-    width: 100%;
-    padding: 14px 20px;
-    margin: 8px 0;
-    border-radius: 3px;
-    border: none;
-    cursor: pointer;
-}
-
-/* Settings Page */
-.delete-btn, .user-delete {
-    color: #cb2431;
-}
-
-.settings-btn {
-    background-color: lightgrey;
-}
-
-.user-settings {
-    border-bottom: 1px #e1e4e8 solid;
-    padding-bottom: 8px;
-}
-
-/* Footer Page */
-footer { 
-	font-family: "Open Sans", Helvetica, Arial, sans-serif;
-}
-
-#icons {
-	padding-left: 22px;
-}
-
-/* Locations */
-
-.udon-address {
-	font-weight: 24px;
-}
-
-/* Analytics */
-
-.chart-view {
-    display: block;
-    max-height: 70%;
-    margin-bottom: 5rem;
 }

@@ -153,8 +153,8 @@ class MenuItem extends React.Component {
     updateMenuItem() {
         let updates = {};
         updates['menu/' + this.props.category + '/' + this.props.itemKey + '/itemName'] = this.state.editedName;
-        updates['menu/' + this.props.category + '/' + this.props.itemKey + '/japaneseName'] = this.state.editedJapaneseName;        
-        updates['messages/' + this.props.category + '/' + this.props.itemKey+ '/description'] = this.state.editedDescription;
+        updates['menu/' + this.props.category + '/' + this.props.itemKey + '/japaneseName'] = this.state.editedJapaneseName;
+        updates['messages/' + this.props.category + '/' + this.props.itemKey + '/description'] = this.state.editedDescription;
         firebase.database().ref().update(updates);
     }
 
@@ -191,11 +191,15 @@ class MenuItem extends React.Component {
                 }
                 <img className="menu-pic" src={this.props.imageSource} alt={this.props.imageName} />
                 {
-                    this.state.editing ? <div className="menu-japanese">
-                        <input className="menu-input form-control font-weight-bold" />
-                        <input className="menu-input form-control" />
-                        <textarea className="menu-input form-control menu-desc" />
-                    </div> : <div className="menu-japanese">
+                    this.state.editing ? <form className="menu-japanese">
+                        <input className="menu-input form-control font-weight-bold" required />
+                        <input className="menu-input form-control" required />
+                        <textarea className="menu-input form-control menu-desc" rows="3" required />
+                        <div className="edit-buttons">
+                            <button className="btn menu-button btn-success ml-3" type="button" onClick={() => this.handleSaveEdit()}>Save</button>
+                            <button className="btn menu-button btn-secondary mr-3" type="button" onClick={() => this.handleCancelEdit()}>Cancel</button>
+                        </div>
+                    </form> : <div className="menu-japanese">
                             <p className="my-1 font-weight-bold">{this.props.itemName}</p>
                             <p className="my-0">{this.props.japaneseName}</p>
                             <p className="menu-desc my-0">{this.props.description}</p>
