@@ -109,8 +109,17 @@ div.udon-red.menu-header {
 }
 
 /* Menu Page */
+.menu-container {
+    margin: auto;
+}
+
+.plus-icon {
+    margin-right: 10px;
+    width: 30px;
+}
+
 h3.selection-2 {
-    margin: 1rem;
+    margin: 3rem;
 }
 
 div.menu-header {
@@ -212,6 +221,10 @@ div.udon-red {
 
     .selection-2 {
         font-size: 30px;
+    }
+
+    .plus-icon {
+        width: 50px
     }
 }
 /* Mission Page */
