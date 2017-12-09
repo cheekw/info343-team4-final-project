@@ -12,6 +12,7 @@ export default class SignUp extends React.Component {
         this.state = {
             displayName: '',
             email: '',
+            favorite: [],
             password: '',
             passwordConfirmation: ''
         };
@@ -43,8 +44,19 @@ export default class SignUp extends React.Component {
                 })
                 .then(user => {
                     firebase.database().ref('users').child(user.uid).set({
-                        'privilege': 'user',
-                        'email': user.email
+                        email: user.email,
+                        favorite: {
+                            dessertOrDrink: {
+
+                            },
+                            side: {
+
+                            },
+                            udon: {
+
+                            }
+                        },
+                        privilege: 'user'
                     });
                 })
                 .then(() => this.props.history.push(constants.routes.home))
