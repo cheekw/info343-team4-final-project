@@ -4,6 +4,7 @@ import Analytics from './components/AnalyticsPage';
 import Contact from './components/ContactPage';
 import Footer from './components/Footer';
 import Home from './components/HomePage';
+import Inquiries from './components/Inquiries';
 import Mission from './components/MissionPage';
 import Menu from './components/MenuPage';
 import NavBar from './components/NavBar';
@@ -25,24 +26,13 @@ class App extends Component {
 						<Route exact path={constants.routes.analytics} component={Analytics} />
 						<Route exact path={constants.routes.contact} component={Contact} />
 						<Route exact path={constants.routes.home} component={Home} />
-						<Route exact path={constants.routes.menu}
-							render={
-								props => <Menu {...props} />
-							}
-						/>
+						<Route exact path={constants.routes.inquiries} component={Inquiries} />
+						<Route exact path={constants.routes.locations} component={Locations} />
 						<Route exact path={constants.routes.mission} component={Mission} />
-						<Route exact path={constants.routes.locations} component={Locations}/>
+						<Route exact path={constants.routes.menu} component={Menu} />
 						<Route exact path={constants.routes.onlineordering} component={OnlineOrdering} />
-						<Route exact path={constants.routes.signup}
-							render={
-								props => <SignUp {...props} />
-							}
-						/>
-						<Route exact path={constants.routes.signin}
-							render={
-								props => <SignIn {...props} />
-							}
-						/>
+						<Route exact path={constants.routes.signup} component={SignUp} />
+						<Route exact path={constants.routes.signin} component={SignIn} />
 						<Route exact path={constants.routes.settings} component={UserSettings} />
 						<Route component={Home} />
 					</Switch>
