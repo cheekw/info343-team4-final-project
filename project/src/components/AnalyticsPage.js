@@ -28,7 +28,7 @@ const data = {
         render() {
           return (
             <div className="container chart-view text-center">
-              <h2>Most Favorited Soups</h2>
+              <h2 className="my-3">Most Favorited Soups</h2>
               <HorizontalBar
                 data={data}
                 width={1000}
