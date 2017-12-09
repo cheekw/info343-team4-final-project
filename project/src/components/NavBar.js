@@ -18,7 +18,10 @@ export default class NavBar extends React.Component {
             if (user) {
                 this.userRef = firebase.database().ref('users').child(user.uid);
                 this.userRef.on('value', snapshot => {
-                    this.setState({ accountPrivilege: snapshot.val().privilege });
+                    let privilege = snapshot.val();
+                    if (privilege === null) {
+                        this.setState({ accountPrivilege: privilege.privilege });
+                    }
                 });
                 this.setState({ user: user });
             } else {
@@ -61,12 +64,14 @@ export default class NavBar extends React.Component {
                             <li className="nav-item mx-2">
                                 <a className="nav-link barlow" href={constants.routes.orderonline}>Order Online</a>
                             </li>
-                            {
-                                this.state.user ?
-                                    <Dropdown accountPrivilege={this.state.accountPrivilege} user={this.state.user} /> :
-                                    <SignRedirect />
-                            }
                         </ul>
+                        {
+                            this.state.user ?
+                                <ul className="nav navbar-nav navbar-right mx-4 dropdown">
+                                    <li><Dropdown accountPrivilege={this.state.accountPrivilege} user={this.state.user} /></li>
+                                </ul> :
+                                <SignRedirect />
+                        }
                     </div>
                 </nav>
             </div>
@@ -96,16 +101,11 @@ class Dropdown extends React.Component {
                     <p className="dropdown-header login-info barlow">Signed in as <strong>{this.props.user.displayName}</strong></p>
                     {
                         this.props.accountPrivilege === "admin" ?
-                            <a className="dropdown-item barlow" href={constants.routes.analytics}>Analytics</a> :
-                            undefined
-                    }
-                    {
-                        this.props.accountPrivilege === "admin" ?
                             <a className="dropdown-item barlow" href={constants.routes.inquiries}>Inquiries</a> :
                             undefined
                     }
                     <a className="dropdown-item barlow" href={constants.routes.settings}>Settings</a>
-                    <a className="dropdown-item barlow" onClick={this.handleSignOut}>Sign Out</a>
+                    <a className="dropdown-item barlow" href={constants.routes.home} onClick={this.handleSignOut}>Sign Out</a>
                 </div>
             </div>
         );
@@ -116,10 +116,10 @@ class SignRedirect extends React.Component {
     render() {
         return (
             <div className="d-flex flex-nowrap">
-                <li className="nav-item">
+                <li className="nav-item dropdown">
                     <a className="nav-link barlow" href={constants.routes.signin}>Sign In</a>
                 </li>
-                <li className="nav-item">
+                <li className="nav-item dropdown">
                     <a className="nav-link barlow" href={constants.routes.signup}>Sign Up</a>
                 </li>
             </div>
