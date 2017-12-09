@@ -144,6 +144,12 @@ class MenuItem extends React.Component {
             editedJapaneseName: this.props.japaneseName,
             editedDescription: this.props.description
         };
+        this.handleEditItem = this.handleEditItem.bind(this);
+        this.handleInputNewItemName = this.handleInputItemCategory.bind(this);
+        this.handleInputNewJapaneseName = this.handleInputJapaneseName.bind(this);
+        this.handleInputNewDescription = this.handleInputDescription.bind(this);
+        this.stopEditing = this.stopEditing.bind(this);
+        this.handleCancelEdit = this.handleCancelEdit.bind(this);
     }
 
     handleEditItem() {
@@ -256,6 +262,7 @@ class AddMenuItem extends React.Component {
         this.handleInputJapaneseName = this.handleInputJapaneseName.bind(this);
         this.handleInputDescription = this.handleInputDescription.bind(this);
         this.handleInputItemPrice = this.handleInputItemPrice.bind(this);
+        this.handleShowImage = this.handleShowImage.bind(this);
         this.handleAddMenuItem = this.handleAddMenuItem.bind(this);
     }
 
@@ -273,10 +280,6 @@ class AddMenuItem extends React.Component {
 
     handleInputItemPrice(event) {
         this.setState({ itemPrice: event.target.value });
-    }
-
-    handleInputCategory(event) {
-        this.setState({ category: event.target.value })
     }
 
     handleShowImage(event) {
