@@ -8,17 +8,10 @@ export default class HomePage extends React.Component {
                     <img id="logo-bowl" src="https://i.imgur.com/bL3Puos.png" alt="logo" />
                     <img id="logo-image" src="https://udonseattle.files.wordpress.com/2011/12/logo-bowl.png" alt="bowl" />
                 </div>
-<<<<<<< HEAD
-                <div id="steps" className="text-center">
-                    <h2 className="mb-4">Easy as <span className="udon-red">1, 2, 3!</span></h2>
-                </div>
-                <div id="steps" className="d-flex flex-wrap justify-content-center my-2">
-=======
                 <div className="text-center barlow">
                     <h2 >Easy as <span className="udon-red">1, 2, 3!</span></h2>
                 </div>
-                <div className="barlow d-flex flex-nowrap justify-content-center my-2">
->>>>>>> cf92db8141c93646ea0849414fee7cb08dd7b773
+                <div className="barlow d-flex flex-wrap justify-content-center my-2">
                     <div className="steps mx-4">
                         <p>1. <span className="udon-red">NOODLE!</span></p>
                         <img src="https://udonseattle.files.wordpress.com/2011/12/menu-kitsune.png?w=170" alt="kitsune udon" />
