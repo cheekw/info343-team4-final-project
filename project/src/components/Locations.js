@@ -7,7 +7,7 @@ export default class Locations extends React.Component {
             <h2 className="text-center barlow">Come check out our locations!</h2>
             <div class="row">
                 <div class="col-sm-6">
-                <div class="card text-center">
+                <div class="card-outline-white text-center">
                 <div class="card-block">
                   <h3 class="card-title">4515 University Way NE, Seattle, WA 98105 </h3>
                   <div className="mx-3 barlow">(206) 453-3788</div>
@@ -18,7 +18,7 @@ export default class Locations extends React.Component {
               </div>
             </div>
             <div class="col-sm-6">
-              <div class="card text-center">
+              <div class="card-outline-white text-center">
                 <div class="card-block">
                   <h3 class="card-title">1640 12th Ave, Seattle, WA 98122</h3>
                   <div className="mx-3 barlow">(206) 466-1471</div>
