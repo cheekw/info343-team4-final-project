@@ -4,14 +4,14 @@ export default class HomePage extends React.Component {
     render() {
         return (
             <div className="mt-2 container align-items-center">
-                <div className="d-flex flex-nowrap justify-content-center">
+                <div className="hide flex-nowrap justify-content-center">
                     <img id="logo-bowl" src="https://i.imgur.com/bL3Puos.png" alt="logo" />
-                    <img src="https://udonseattle.files.wordpress.com/2011/12/logo-bowl.png" alt="bowl" />
+                    <img id="logo-image" src="https://udonseattle.files.wordpress.com/2011/12/logo-bowl.png" alt="bowl" />
                 </div>
                 <div id="steps" className="text-center">
-                    <h2 >Easy as <span className="udon-red">1, 2, 3!</span></h2>
+                    <h2 className="mb-4">Easy as <span className="udon-red">1, 2, 3!</span></h2>
                 </div>
-                <div id="steps" className="d-flex flex-nowrap justify-content-center my-2">
+                <div id="steps" className="d-flex flex-wrap justify-content-center my-2">
                     <div className="steps mx-4">
                         <p>1. <span className="udon-red">NOODLE!</span></p>
                         <img src="https://udonseattle.files.wordpress.com/2011/12/menu-kitsune.png?w=170" alt="" />
